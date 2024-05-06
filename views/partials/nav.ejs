@@ -1,0 +1,55 @@
+
+<nav class="navbar navbar-expand-lg bg-white  navbar-transparent position-fixed w-100 top-0 z-index-3 shadow-none py-2 start-0 end-0" id="navbarPresentationShadow">
+    <div class="container pt-1">
+        <a class="navbar-brand font-weight-bolder ms-sm-3" href="/" rel="tooltip" title="Designed and Coded by Gerard Nwazuruoke(Son)" data-placement="bottom">
+            <img alt="Logo" style="height: 30px; width: 30px;" src="../../assets/img/logo.png">
+        </a>
+        <% if (isAuthenticated) { %>
+            <a href="/auth/logout" class="btn btn-sm  bg-gradient-info  btn-round mb-0 ms-auto d-lg-none d-block">Logout</a>
+        <% } else { %>
+            <a href="/auth/login" class="btn btn-sm  bg-gradient-info  btn-round mb-0 ms-auto d-lg-none d-block">Login</a>
+        <% } %>
+        <button class="navbar-toggler shadow-none ms-md-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon mt-2">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+            </span>
+        </button>
+        <div class="collapse navbar-collapse w-100 pt-3 pb-2 py-lg-0" id="navigation">
+            <ul class="navbar-nav navbar-nav-hover mx-auto">
+                <li class="nav-item dropdown dropdown-hover mx-2">
+                    <a href="/" class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center text-dark">
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item dropdown dropdown-hover mx-2">
+                    <a href="" class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center text-dark">
+                        Tribute
+                    </a>
+                </li>
+            </ul>
+            <% if (isAuthenticated) { %>
+                <div class="dropdown">
+                    <a href="" class="avatar rounded-circle dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <% if (user && user.image) { %>
+                            <img alt="User Profile Image" src="<%= user.image %>">
+                        <% } else { %>
+                            <!-- Handle case when there is no user, user.profile, or user.profile.image -->
+                            <img alt="Default Profile Image" src="https://res.cloudinary.com/geetechlab-com/image/upload/v1583147406/nwaben.com/user_azjdde_sd2oje.jpg">
+                        <% } %>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="/auth/logout">Logout</a></li>
+                    </ul>
+                </div>
+            <% } else { %>
+                <ul class="navbar-nav d-lg-block d-none">
+                    <li class="nav-item">
+                        <a href="/auth/login" class="btn btn-sm  bg-gradient-info  btn-round mb-0 me-1">Login</a>
+                    </li>
+                </ul>
+            <% } %>
+        </div>
+    </div>
+</nav>
