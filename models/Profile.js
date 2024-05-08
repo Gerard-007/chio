@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const profileSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
+  // user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, unique: true },
   slug: { type: String, unique: true },
   gender: { type: String, enum: ['Male', 'Female', 'Other'], default: 'Other' },
   bio: { type: String, default: 'Say something about yourself' },

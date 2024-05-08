@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema({
     date_joined: { type: Date, default: Date.now },
     is_active: { type: Boolean, default: true },
     is_staff: { type: Boolean, default: false },
-    is_admin: { type: Boolean, default: false }
+    is_admin: { type: Boolean, default: false },
+    profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile', unique: true }
 });
 
 // Apply the passport-local-mongoose plugin to handle password hashing and other password-related operations
