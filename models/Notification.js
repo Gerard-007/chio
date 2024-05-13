@@ -71,12 +71,8 @@ const notificationSchema = new Schema({
     is_seen: {
         type: Boolean,
         default: false,
-    },
-    created_at: {
-        type: Date,
-        default: Date.now,
-    },
-});
+    }
+}, { timestamps: true });
 
 // Method to return a readable representation of the document (similar to Django's `__str__`)
 notificationSchema.methods.toString = function() {

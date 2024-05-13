@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();// Import models
 const Tribute = require('../models/Tribute');
-const {isAuthenticated} = require('../middleware/isAuthenticated')
+const User = require('../models/User');
+const {isAuthenticated} = require('../middleware/isAuthenticated');
+const {StatusCodes} = require('http-status-codes')
+// const formatDate = require('../utils/humanize');
 
 
 // Define routes
@@ -23,42 +26,10 @@ router.get('/tributes', async (req, res) => {
 });
 
 
-// Create a new tribute
-function createTributeRoute(io) {
-    router.post('/create', isAuthenticated, async (req, res) => {
-        try {
-            const { tribute_text, category } = req.body;
-            console.log(tribute_text, category);
-
-            const tribute = new Tribute({
-                tribute_text,
-                category,
-                by: req.user._id,  // Correct the `by` assignment
-                on: new Date(),
-            });
-
-            await tribute.save();
-
-            // Emit the new tribute to all connected clients
-            io.emit('new-tribute', tribute);
-
-            res.redirect('/');
-        } catch (error) {
-            console.error('Error creating tribute:', error);
-            res.status(500).send('Server Error');
-        }
-    });
-
-    return router;
-}
-
-module.exports = {router, createTributeRoute};
-
-
-
 function asyncTributeRoute(io) {
     router.post('/create', isAuthenticated, async (req, res) => {
         try {
+            console.log(req.body);
             const { tribute_text, category } = req.body;
 
             const tribute = new Tribute({
@@ -70,13 +41,25 @@ function asyncTributeRoute(io) {
 
             await tribute.save();
 
-            // Emit the new tribute to all connected clients
-            io.emit('new-tribute', tribute);
+            // Retrieve the logged-in user's ID
+            const userId = req.user ? req.user._id : null;
 
-            res.redirect('/');
+            const user = await User.findById(userId).populate('profile');
+
+            // Emit the new tribute to all connected clients
+
+            io.emit('new-tribute', tribute, user);
+
+            res.status(StatusCodes.OK).json({
+                status: "success",
+                message: "Your tribute was added successfully"
+            });
         } catch (error) {
             console.error('Error creating tribute:', error);
-            res.status(500).send('Server Error');
+            res.status(StatusCodes.BAD_REQUEST).json({
+                status: "error",
+                message: "An error occurred while uploading you tribute."
+            });
         }
     });
 

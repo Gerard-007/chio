@@ -28,8 +28,7 @@ const burialMemorySchema = new Schema({
     family_biography: { type: String, default: null },
     burial_ceremony_address: { type: String, maxLength: 220, default: null },
     accept_donations: { type: Boolean, default: false },
-    created: { type: Date, default: Date.now }
-});
+}, { timestamps: true });
 
 // Helper functions similar to Django's property methods
 burialMemorySchema.methods.getName = function() {

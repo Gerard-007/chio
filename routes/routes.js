@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-// const formatDate = require('../utils/humanize');
 const {isAuthenticated} = require('../middleware/isAuthenticated')
-const Profile = require('../models/Profile'); // Import the Profile model
 const User = require('../models/User'); // Import the User model
 const Tribute = require('../models/Tribute');
+const Gallery = require('../models/Gallery');
+const formatDate = require('../utils/humanize');
 
 
 // Function to render a view with the user's profile data
@@ -23,7 +23,7 @@ const renderPageWithUserProfile = async (req, res, viewName) => {
         const tributes = await Tribute.find()
             .populate({
                 path: 'by', // Populate the 'by' field (user reference)
-                select: 'full_name profile', // Select specific fields from the User schema including the 'profile' reference
+                select: 'full_name is_admin profile', // Select specific fields from the User schema including the 'profile' reference
                 populate: {
                     path: 'profile', // Populate the 'profile' field from the User
                     select: 'image', // Select the 'image' field from the Profile schema
@@ -31,8 +31,7 @@ const renderPageWithUserProfile = async (req, res, viewName) => {
             })
             .sort({ on: -1 });
 
-        console.log('Current user:', user);
-        console.log('Populated tributes:', tributes);
+        const galleries = await Gallery.find().sort({ created: -1 })
 
         // Render the view and pass the user object
         res.render(viewName, {
@@ -40,6 +39,8 @@ const renderPageWithUserProfile = async (req, res, viewName) => {
             isAuthenticated: req.isAuthenticated(),
             user: user || null, // Passes the populated user object
             tributes: tributes || [],
+            galleries: galleries || [],
+            formatDate
         });
     } catch (error) {
         console.error(`Error fetching user's profile for ${viewName} route:`, error);

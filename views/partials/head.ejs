@@ -1,22 +1,19 @@
-<!-- <link rel="canonical" href="https://www.creative-tim.com/product/now-ui-design-system-pro" />
+<link rel="canonical" href="https://www.creative-tim.com/product/now-ui-design-system-pro" />
 
-<meta name="keywords" content="bootstrap, bootstrap 5, bootstrap5, ui kit, design system, responsive design, web design ui, ui design system, now ui kit, now ui design system">
+<meta name="keywords" content="chio, genas, genas.ng. genas systems and tech services, genas systems & tech services, design system">
 <meta name="description" content="Most complex and innovative Design System Made by Creative Tim. Check our latest Premium Bootstrap 5 UI Kit.">
 
 <meta name="twitter:card" content="product">
-<meta name="twitter:site" content="@creativetim">
-<meta name="twitter:title" content="Now UI Design System Pro by Creative Tim">
-<meta name="twitter:description" content="Most complex and innovative Design System Made by Creative Tim. Check our latest Premium Bootstrap 5 UI Kit.">
+<meta name="twitter:site" content="@genas">
+<meta name="twitter:title" content="Chio by genas.ng">
+<meta name="twitter:description" content="A memorial website for my mother built with Bootstrap 5 UI Kit.">
 <meta name="twitter:creator" content="@genas">
-<meta name="twitter:image" content="https://s3.amazonaws.com/creativetim_bucket/products/489/thumb/opt_nudsp_thumbnail.png"> -->
 
-<!-- <meta property="fb:app_id" content="655968634437471">
-<meta property="og:title" content="Now UI Design System Pro by Creative Tim" />
+
+<meta property="og:title" content="Chio by genas.ng" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://demos.creative-tim.com/now-ui-design-system-pro/presentation.html" />
-<meta property="og:image" content="https://s3.amazonaws.com/creativetim_bucket/products/489/thumb/opt_nudsp_thumbnail.png" />
-<meta property="og:description" content="Most complex and innovative Design System Made by Creative Tim. Check our latest Premium Bootstrap 5 UI Kit." />
-<meta property="og:site_name" content="Creative Tim" /> -->
+<meta property="og:description" content="A memorial website for my mother built with Bootstrap 5 UI Kit." />
+<meta property="og:site_name" content="Genas" />
 
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700,200|Open+Sans+Condensed:700" rel="stylesheet">
 
@@ -28,8 +25,63 @@
 <link id="pagestyle" href="/assets/css/now-design-system-pro.min.css" rel="stylesheet" />
 <link id="pagestyle" href="/assets/fonts/all.min.css" rel="stylesheet" />
 
+<link href="/assets/customs/multi_upload_v2.css" rel="stylesheet" />
+<link href="/assets/plugins/toastify.min.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/css/lightgallery.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/css/lg-autoplay.min.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/css/lg-comments.min.css"/>
+
 <style>
     .async-hide {
         opacity: 0 !important
+    }
+</style>
+
+<style>
+    /* Base styles for each nav-link */
+    .nav-link {
+        border-radius: 50px; /* Adjusts the border radius for pill shape */
+        padding: 10px 20px; /* Adjusts the padding for better spacing */
+        transition: all 0.4s; /* Smooth transition for hover and active effects */
+    }
+
+    /* Style for active nav-link */
+    .nav-link.active {
+        border-radius: 50px;
+        border: 2px solid #0053ae; /* Border color when active */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow effect when active */
+        transition: all 0.4s;
+    }
+
+    .radio_item {
+        display: none !important;
+    }
+
+    .label_item {
+        opacity: 0.5;
+    }
+
+    .radio_item:checked + label {
+        opacity: 1;
+        border: 2px solid #0053ae;
+        border-radius: 5px;
+    }
+
+    .form-control:focus {
+        box-shadow: 10px 0px 0px 0px #ffffff !important;
+        border-color: #0053ae;
+    }
+
+    /* Creating the dark overlay */
+    #background-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.7); /* Black with 50% opacity */
+        z-index: 1; /* Ensures the overlay is on top of the background */
     }
 </style>

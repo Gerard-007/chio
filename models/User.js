@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     is_staff: { type: Boolean, default: false },
     is_admin: { type: Boolean, default: false },
     profile: { type: mongoose.Schema.Types.ObjectId, ref: 'Profile', unique: true }
-});
+}, { timestamps: true });
 
 // Apply the passport-local-mongoose plugin to handle password hashing and other password-related operations
 userSchema.plugin(passportLocalMongoose, { usernameField: 'email' });

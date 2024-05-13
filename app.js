@@ -42,7 +42,7 @@ require('./config/google-oauth2')(passport);
 app.use(flash());
 
 // Setup Morgan debug tool
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
 
 // Setup static route
 app.use(express.static(path.join(__dirname, 'public')));
@@ -59,6 +59,7 @@ app.set('view engine', 'ejs');
 app.use('', require('./routes/routes'))
 app.use('/auth/', require('./routes/auth'))
 app.use('/tribute/', require('./routes/tribute')(io))
+app.use('/gallery/', require('./routes/gallery')(io))
 
 
 // Import Connect DB

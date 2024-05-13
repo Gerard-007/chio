@@ -8,7 +8,7 @@ const memoryTributeSchema = new Schema({
     category: { type: String, enum: ['candle', 'flower', 'note'], default: 'candle' },
     by: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     on: { type: Date, default: Date.now },
-});
+}, { timestamps: true });
 
 // Method to return a readable representation of the document (similar to Django's `__str__`)
 // memoryTributeSchema.methods.toString = function() {

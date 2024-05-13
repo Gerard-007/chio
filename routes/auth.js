@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 const User = require('../models/User');
+const Profile = require('../models/Profile');
 const generateUsername = require('../utils/generateUsername');
 const {isNotAuthenticated} = require('../middleware/isAuthenticated')
 
@@ -65,7 +66,7 @@ router.post('/register', isNotAuthenticated, async (req, res) => {
         });
 
         // Register the user using the passport-local-mongoose plugin
-        User.register(newUser, req.body.password, (err, user) => {
+        User.register(newUser, req.body.password, async (err, user) => {
             if (err) {
                 console.log('Error registering user:', err);
 
@@ -85,6 +86,22 @@ router.post('/register', isNotAuthenticated, async (req, res) => {
                 return res.redirect('/auth/register');
             }
 
+            // Create a new profile instance for the registered user
+            const newProfile = new Profile({
+                user: user._id,
+                slug: user.username,
+                gender: 'Other',
+                bio: 'Say something about yourself',
+                // Add any other profile fields here
+            });
+
+            // Save the profile instance
+            const userProfile = await newProfile.save();
+
+            // Assign the profile ID to the user's profile field
+            user.profile = userProfile._id;
+            await user.save();
+
             // If registration is successful, redirect to the login page
             res.redirect('/auth/login');
         });
@@ -94,6 +111,8 @@ router.post('/register', isNotAuthenticated, async (req, res) => {
         res.redirect('/auth/register');
     }
 });
+
+
 
 
 
@@ -119,12 +138,13 @@ router.post('/login', isNotAuthenticated, (req, res, next) => {
                 return res.redirect('/');
             });
         } else {
-            // If authentication failed, flash an error message and redirect to the login page
-            req.flash('error', info.message || 'Invalid email or password.');
+            // If authentication failed, flash a custom error message
+            req.flash('error', 'Invalid email or password.');
             return res.redirect('/auth/login');
         }
     })(req, res, next);
 });
+
 
 
 // Logout user

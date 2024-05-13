@@ -13,7 +13,7 @@ const profileSchema = new mongoose.Schema({
   city: { type: String },
   local_area: { type: String },
   address: { type: String }
-});
+}, { timestamps: true });
 
 const Profile = mongoose.model('Profile', profileSchema);
 

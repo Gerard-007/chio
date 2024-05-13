@@ -5,13 +5,10 @@ const { Schema } = mongoose;
 // Define the MemoryGallery schema
 const memoryGallerySchema = new Schema({
     by: { type: Schema.Types.ObjectId, ref: 'User', required: false },
-    burial_memory: { type: Schema.Types.ObjectId, ref: 'BurialMemory', required: true },
+    // burial_memory: { type: Schema.Types.ObjectId, ref: 'BurialMemory', required: true },
     description: { type: String, default: null },
     image: { type: String, default: null },
-    video: { type: String, default: null }, // You can use a URLField (String) for video links
-    audio: { type: String, default: null },
-    created: { type: Date, default: Date.now }
-});
+}, { timestamps: true });
 
 
 // Helper methods

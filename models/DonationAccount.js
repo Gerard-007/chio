@@ -51,7 +51,7 @@ const donationAccountSchema = new Schema({
         default: 0.00,
         required: true,
     },
-});
+}, { timestamps: true });
 
 // Method to return a readable representation of the document (similar to Django's `__str__`)
 donationAccountSchema.methods.toString = function() {

@@ -45,7 +45,7 @@ const donationSchema = new Schema({
         type: Date,
         default: Date.now,
     },
-});
+}, { timestamps: true });
 
 // Method to return a readable representation of the document (similar to Django's `__str__`)
 donationSchema.methods.toString = function() {
