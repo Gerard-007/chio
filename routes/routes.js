@@ -31,7 +31,10 @@ const renderPageWithUserProfile = async (req, res, viewName) => {
             })
             .sort({ on: -1 });
 
-        const galleries = await Gallery.find().sort({ created: -1 })
+        const galleries = await Gallery.find().populate({
+            path: 'by', // Populate the 'by' field (user reference)
+            select: 'username full_name is_admin profile',
+        }).sort({ createdAt: -1 })
 
         // Render the view and pass the user object
         res.render(viewName, {

@@ -16,8 +16,8 @@
 
                     <div class="d-flex justify-content-center mt-3">
                         <small class="text-white px-2">
-                            <a href="#tribute_section" id="write_tribute" class="btn btn-dark btn-round btn-md">
-                                <i class="fa-solid fa-cross" aria-hidden="true"></i> Tribute
+                            <a href="#tribute_section" id="write_tribute" class="btn btn-info btn-round btn-md">
+                                <i class="fa-solid fa-cross" aria-hidden="true"></i> Write a Tribute
                             </a>
                         </small>
                         <small class="text-white px-2">
@@ -197,7 +197,7 @@
                                                     <!-- Display the tribute text -->
                                                     <p><%= tribute.tribute_text %></p>
 
-                                                    <% if (user.is_admin) { %>
+                                                    <% if (isAuthenticated) { %>
                                                         <div class="ms-auto text-start mb-3 mt-0">
                                                             <% if (user.is_admin) { %>
                                                                 <a href="#" class="btn text-dark px-2 btn-link" rel="tooltip" title="" data-original-title="Reply to Comment">
@@ -232,21 +232,25 @@
 
                             <div class="row justify-content-md-center mb-3">
                                 <div class="col-md-8">
-                                    <h6 class="fw-bold mt-4 mb-1">Upload Images</h6>
-                                    <div class="upload-card mb-3">
-                                        <div class="upload-form">
-                                            <span class="inner">Drag and drop images here or
-                                                <span class="file_select">Browse</span>
-                                                <input name="images" type="file" class="file" multiple accept="image/*" required>
-                                            </span>
+                                    <h6 class="text-center">Upload Images</h6>
+                                    <% if (isAuthenticated) { %>
+                                        <div class="upload-card mb-3">
+                                            <div class="upload-form">
+                                                <span class="inner">Drag and drop images here or
+                                                    <span class="file_select">Browse</span>
+                                                    <input name="images" type="file" class="file" multiple accept="image/*" required>
+                                                </span>
+                                            </div>
+                                            <div class="img-container">
+                                            </div>
                                         </div>
-                                        <div class="img-container">
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-icon btn-3 btn-info" type="button" id="send_data">
-                                        <span class="btn-inner--icon"><i class="fa-solid fa-upload fa-lg"></i></span>
-                                        <span class="btn-inner--text">Upload</span>
-                                    </button>
+                                        <button class="btn btn-icon btn-3 btn-info" type="button" id="send_data">
+                                            <span class="btn-inner--icon"><i class="fa-solid fa-upload fa-lg"></i></span>
+                                            <span class="btn-inner--text">Upload</span>
+                                        </button>
+                                    <% } else { %>
+                                        <p class="lead text-center">Please click <a href="/auth/login">here</a> to login/register and add your tribute</p>
+                                    <% } %>
                                 </div>
                             </div>
 
@@ -255,7 +259,21 @@
                             <% if (galleries) { %>
                                 <% for (const gallery of galleries) { %>
                                     <div class="col-md-3 mb-3 mt-3 gallery-item" data-lg-size="1600-1067" data-src="<%= gallery.image %>" data-sub-html="<h4> Uploaded by <%= gallery.by.full_name%> </h4> <p> <%= gallery.description %> </p>">
-                                        <img alt="<%= gallery.by %>" class="w-100 h-100 border-radius-lg bg-cover img-responsive" src="<%= gallery.image %>"/>
+                                        <div class="position-relative" style="height: 200px;"> <!-- Set a fixed height for the container -->
+                                            <img alt="<%= gallery.by.full_name %>" class="w-100 h-100 border-radius-lg bg-cover img-responsive" src="<%= gallery.image %>"/>
+                                            <div class="d-flex justify-content-between">
+                                                <button type="button" class="btn badge bg-gradient-info text-white px-2 btn-link position-absolute top-0 start-0 m-1" id="view-gallery-button" data-gallery-id="<%= gallery._id %>">
+                                                    <i class="fa-solid fa-eye fa-lg"></i>
+                                                </button>
+                                                <% if (isAuthenticated) { %>
+                                                    <% if (user.is_admin || gallery.by._id.toString() === user._id.toString()) { %>
+                                                        <button type="button" class="btn badge bg-gradient-danger text-white px-2 btn-link position-absolute top-0 end-0 m-1" id="delete-gallery-button" data-gallery-id="<%= gallery._id %>">
+                                                            <i class="fa-solid fa-trash-can fa-lg"></i>
+                                                        </button>
+                                                    <% } %>
+                                                <% } %>
+                                            </div>
+                                        </div>
                                     </div>
                                 <% } %>
                             <% } %>
@@ -406,8 +424,6 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/assets/customs/main.js"></script>
-<script src="/assets/customs/custom.js"></script>
-<script src="/assets/plugins/axios.min.js"></script>
 
 
 
@@ -453,12 +469,12 @@
 <!--Gallery image upload-->
 <script type="text/javascript">
     let files = []
-    submit_btn = document.querySelector("#send_data");
-    form = document.querySelector(".upload-form");
-    container = document.querySelector(".img-container");
-    text = document.querySelector(".inner");
-    browse = document.querySelector(".file_select");
-    input = document.querySelector(".upload-form input");
+    let submit_btn = document.querySelector("#send_data");
+    let upload_form = document.querySelector(".upload-form");
+    let container = document.querySelector(".img-container");
+    let text = document.querySelector(".inner");
+    let browse = document.querySelector(".file_select");
+    let input = document.querySelector(".upload-form input");
 
     browse.addEventListener('click', () => input.click());
 
@@ -493,21 +509,21 @@
     }
 
     // Drag and Drop functionality...
-    form.addEventListener('dragover', e => {
+    upload_form.addEventListener('dragover', e => {
         e.preventDefault();
-        form.classList.add('dragover');
+        upload_form.classList.add('dragover');
         text.innerHTML = 'Drop images here';
     });
 
-    form.addEventListener('dragleave', e => {
+    upload_form.addEventListener('dragleave', e => {
         e.preventDefault();
-        form.classList.remove('dragover');
+        upload_form.classList.remove('dragover');
         text.innerHTML = 'Drag and drop images here or <span class="file_select">Browse</span>';
     });
 
-    form.addEventListener('drop', e => {
+    upload_form.addEventListener('drop', e => {
         e.preventDefault();
-        form.classList.remove('dragover');
+        upload_form.classList.remove('dragover');
         text.innerHTML = 'Drag and drop images here or <span class="file_select">Browse</span>';
 
         let file = e.dataTransfer.files;
@@ -523,6 +539,7 @@
 
     // Submit to backend...
     submit_btn.addEventListener('click', () => {
+        toggleButtonText(true, "send_data");
         let formData = new FormData();
 
         for(let file of files) {
@@ -536,11 +553,13 @@
         })
         .then(response => response.json()) // Parse response JSON
         .then(data => {
+            toggleButtonText(false, "send_data");
             if (data.status === "success") {
                 successToast("success", "Image uploaded successfully.")
             }
         })
         .catch(error => {
+            toggleButtonText(false, "send_data");
             console.log(error);
             errorToast("error", "Image upload error");
         });
@@ -553,11 +572,51 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/plugins/comment/lg-comment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/plugins/autoplay/lg-autoplay.min.js"></script>
 
+
 <script>
-    lightGallery(document.getElementById('animated-thumbnails-gallery'), {
-        thumbnail: true,
-        controls: true,
-        download: false,
-        plugins: [lgAutoplay]
+    document.addEventListener('DOMContentLoaded', function() {
+        let lightGalleryInstance = null; // Variable to store the LightGallery instance
+    
+        const deleteButtons = document.querySelectorAll('#delete-gallery-button');
+        const galleryContainer = document.getElementById('animated-thumbnails-gallery');
+    
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', async function() {
+                // Check if LightGallery instance exists and destroy it
+                if (lightGalleryInstance) {
+                    lightGalleryInstance.destroy();
+                    lightGalleryInstance = null;
+                }
+
+                const galleryId = button.getAttribute('data-gallery-id');
+                console.log(`galleryId: ${galleryId}`);
+                try {
+                    // Send delete request to backend
+                    const response = await axios.delete(`/gallery/${galleryId}`);
+                    if (response.data.success) {
+                        // Remove gallery item from DOM
+                        galleryItem.remove();
+                    }
+                } catch (error) {
+                    console.error('Error deleting gallery item:', error);
+                }
+            });
+        });
+    
+        const viewButtons = document.querySelectorAll('#view-gallery-button');
+        viewButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Check if LightGallery instance already exists
+                if (!lightGalleryInstance) {
+                    // Create LightGallery instance
+                    lightGalleryInstance = lightGallery(galleryContainer, {
+                        thumbnail: true,
+                        controls: true,
+                        download: false,
+                        plugins: [lgAutoplay]
+                    });
+                }
+            });
+        });
     });
 </script>

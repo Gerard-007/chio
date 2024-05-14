@@ -1,50 +1,6 @@
 const socket = io();
 
 
-function successToast(status, message) {
-    Toastify({
-        text: message,
-        className: status,
-        style: {
-          background: "linear-gradient(to right, #02D043, #96c93d)",
-        }
-      }).showToast();
-}
-
-
-function infoToast(status, message) {
-    Toastify({
-        text: message,
-        className: status,
-        style: {
-          background: "linear-gradient(to right, #015282, #0AE3E0)",
-        }
-      }).showToast();
-}
-
-
-function warningToast(status, message) {
-    Toastify({
-        text: message,
-        className: status,
-        style: {
-          background: "linear-gradient(to right, #EECB07, #FFFB02)",
-        }
-      }).showToast();
-}
-
-
-function errorToast(status, message) {
-    Toastify({
-        text: message,
-        className: status,
-        style: {
-          background: "linear-gradient(to right, #AB4201, #CE6605)",
-        }
-      }).showToast();
-}
-
-
 // Listen for new tributes
 socket.on('new-tribute', (tribute, user) => {
     // Get the div element where new tributes will be appended
@@ -128,3 +84,27 @@ document.addEventListener('click', event => {
 
 
 
+socket.on('new-gallery', (gallery) => {
+    const galleryContainer = document.getElementById('animated-thumbnails-gallery');
+    const galleryItemDiv = document.createElement('div');
+    galleryItemDiv.innerHTML = `
+        <div class="col-md-3 mb-3 mt-3 gallery-item" data-lg-size="1600-1067" data-src="${gallery.image}" data-sub-html="<h4> Uploaded by ${gallery.by.full_name} </h4> <p> ${gallery.description} </p>">
+            <div class="position-relative" style="height: 200px;"> <!-- Set a fixed height for the container -->
+                <img alt="${gallery.by.full_name}" class="w-100 h-100 border-radius-lg bg-cover img-responsive" src="${gallery.image}"/>
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn badge bg-gradient-info text-white px-2 btn-link position-absolute top-0 start-0 m-1" id="view-gallery-button" data-gallery-id="${gallery._id}">
+                        <i class="fa-solid fa-eye fa-lg"></i>
+                    </button>
+                    <% if (isAuthenticated) { %>
+                        <% if (user.is_admin || gallery.by._id.toString() === user._id.toString()) { %>
+                            <button type="button" class="btn badge bg-gradient-danger text-white px-2 btn-link position-absolute top-0 end-0 m-1" id="delete-gallery-button" data-gallery-id="${gallery._id}">
+                                <i class="fa-solid fa-trash-can fa-lg"></i>
+                            </button>
+                        <% } %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    `;
+    galleryContainer.prepend(galleryItemDiv.firstChild);
+});
