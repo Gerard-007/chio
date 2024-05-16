@@ -4,7 +4,7 @@ const Tribute = require('../models/Tribute');
 const User = require('../models/User');
 const {isAuthenticated} = require('../middleware/isAuthenticated');
 const {StatusCodes} = require('http-status-codes')
-// const formatDate = require('../utils/humanize');
+const formatDate = require('../utils/humanize');
 
 
 // Define routes
@@ -41,14 +41,17 @@ function asyncTributeRoute(io) {
 
             await tribute.save();
 
-            // Retrieve the logged-in user's ID
-            const userId = req.user ? req.user._id : null;
+            // Get current saved tribute with user details.
+            const tribute_instance = await Tribute.findById(tribute._id).populate({
+                path: 'by',
+                select: 'full_name is_admin profile',
+                populate: {
+                    path: 'profile',
+                    select: 'image',
+                },
+            });
 
-            const user = await User.findById(userId).populate('profile');
-
-            // Emit the new tribute to all connected clients
-
-            io.emit('new-tribute', tribute, user);
+            io.emit('new-tribute', tribute_instance);
 
             res.status(StatusCodes.OK).json({
                 status: "success",
@@ -65,7 +68,7 @@ function asyncTributeRoute(io) {
 
 
     // Update a tribute
-    router.put('/update/:id', async (req, res) => {
+    router.put('/update/:id', isAuthenticated, async (req, res) => {
         try {
             const { id } = req.params;
             const { tribute_text, category } = req.body;
@@ -91,23 +94,23 @@ function asyncTributeRoute(io) {
 
 
     // Delete a tribute
-    router.delete('/delete/:id', async (req, res) => {
+    router.delete('/delete/:id', isAuthenticated, async (req, res) => {
         try {
             const { id } = req.params;
-
+            console.log(`tribute_id: ${id}`);
             const tribute = await Tribute.findByIdAndDelete(id);
 
             if (!tribute) {
-                return res.status(404).send('Tribute not found');
+                return res.status(404).json({status: 'error', message: 'Tribute not found'});
             }
 
             // Emit the deleted tribute to all connected clients
             io.emit('delete-tribute', id);
 
-            res.status(200).send('Tribute deleted successfully');
+            res.status(200).json({status:"success", message: 'Tribute deleted successfully'});
         } catch (error) {
             console.error('Error deleting tribute:', error);
-            res.status(500).send('Server Error');
+            res.status(500).json({status: "error", message: 'Error deleting tribute'});
         }
     });
 

@@ -13,18 +13,23 @@
 
                     <small class="text-white">RN, RM, BSc(Nursing), PGD, MSc(Mat. & Child Health Nursing), MSc(Health Edu), PhD(Mat. & Child Health Nursing), FWACN</small>
 
-
-                    <div class="d-flex justify-content-center mt-3">
-                        <small class="text-white px-2">
-                            <a href="#tribute_section" id="write_tribute" class="btn btn-info btn-round btn-md">
-                                <i class="fa-solid fa-cross" aria-hidden="true"></i> Write a Tribute
-                            </a>
-                        </small>
-                        <small class="text-white px-2">
-                            <a href="https://drive.google.com/file/d/1OPkoQBpQAC2vNkQkNbugtQba97Bd8Z2l/view?usp=drive_link" target="_blank" class="btn btn-warning btn-round btn-md">
-                                <i class="fa fa-download" aria-hidden="true"></i> Download IV
-                            </a>
-                        </small>
+                    <div class="container mt-3">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <small class="text-white px-2">
+                                    <a href="#tribute_section" id="write_tribute" class="btn btn-info btn-round btn-md">
+                                        <i class="fa-solid fa-cross" aria-hidden="true"></i> Write a Tribute
+                                    </a>
+                                </small>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="text-white px-2">
+                                    <a href="https://drive.google.com/file/d/1OPkoQBpQAC2vNkQkNbugtQba97Bd8Z2l/view?usp=drive_link" target="_blank" class="btn btn-warning btn-round btn-md">
+                                        <i class="fa fa-download" aria-hidden="true"></i> Download IV
+                                    </a>
+                                </small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -37,24 +42,26 @@
     <div class="container">
 
         <div class="row justify-content-center">
-            <div class="col-md-auto">
+            <div class="col-md-10 ms-auto me-auto">
                 <div class="card card-frame">
                     <div class="card-body">
-                        <div>
-                            <h5 class="lead text-center mt-3 font-weight-small">
+                        <div class="mx-3">
+                            <h4 class="lead text-center mt-3 font-weight-small text-dark">
                                 "Let the memory of late Dr. Mrs. Juliana Chibuogwu Nwazuruoke(Chio) be with us forever."
-                            </h5>
+                            </h4>
 
-                            <p class="text-center">
+                            <p class="text-center text-dark my-3">
                                 Born on Jan. 20, 1956<br>
                                 Rested in the Lord on April 11, 2024<br>
                             </p>
 
-                            <p class="text-center">
+                            <p class="text-center text-dark my-3">
                                 - This website was created & administered by: Gerard Nwazuruoke(Son) for the family.
                             </p>
                         </div>
-                        <div class="nav-wrapper position-relative end-0">
+
+                        <!-- Tab Options -->
+                        <div class="nav-wrapper position-relative end-0 mt-5">
                             <ul class="nav nav-pills nav-fill rounded-pill flex-row p-1" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link mb-0 px-0 py-1 rounded-pill active" data-bs-toggle="tab" href="#tribute_widget" role="tab" aria-selected="true">
@@ -85,9 +92,9 @@
             <div class="tab-pane active" id="tribute_widget">
 
                 <section class="py-7">
-                    <div class="container">
+                    <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-8 ms-auto me-auto">
+                            <div class="col-md-10 ms-auto me-auto">
                                 <h4 class="text-center mb-5">Leave a Tribute</h4>
 
                                 <% if (isAuthenticated) { %>
@@ -110,34 +117,35 @@
                                                     <input type="radio" class="radio_item"
                                                         value="candle" name="category"
                                                         id="candle" checked>
-                                                    <label class="label_item" for="candle">
+                                                    <label class="label_item text-center" for="candle">
                                                         <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/000000/external-candles-pharmaceutical-flaticons-lineal-color-flat-icons-2.png"/>
-                                                        <small class="font-normal">Light a candle</small>
+                                                        <h6 class="font-normal text-center">Light a candle</h6>
                                                     </label>
 
                                                     <!--RADIO Flower-->
                                                     <input type="radio" class="radio_item"
                                                         value="flower" name="category"
                                                         id="flower">
-                                                    <label class="label_item" for="flower">
+                                                    <label class="label_item text-center" for="flower">
                                                         <img src="https://img.icons8.com/color/64/000000/bunch-flowers.png"/>
-                                                        <small class="font-normal">Lay a flower</small>
+                                                        <h6 class="font-normal text-center">Lay a flower</h6>
                                                     </label>
 
                                                     <!--RADIO Note-->
                                                     <input type="radio" class="radio_item"
                                                         value="note" name="category" id="note">
-                                                    <label class="label_item" for="note">
-                                                        <img src="https://img.icons8.com/color/64/000000/scroll.png"/>
-                                                        <small class="font-normal">Leave a note</small>
-                                                    </label>
+                                                        <label class="label_item text-center" for="note">
+                                                            <img src="https://img.icons8.com/color/64/000000/scroll.png"/>
+                                                            <h6 class="font-normal text-center">Leave a note</h6>
+                                                        </label>
                                                 </div>
 
-                                                <textarea class="form-control border-radius-lg" placeholder="Write your tribute here..." rows="4" name="tribute_text" id="tribute_text" required>
+
+                                                <textarea class="form-control border-radius-lg" rows="4" name="tribute_text" id="tribute_text" required>
                                                 </textarea>
 
                                                 <div>
-                                                    <button type="submit" class="btn bg-gradient-info float-end mt-2 px-2">
+                                                    <button type="submit" class="btn bg-gradient-info float-end mt-2 px-2" id="upload_tribute">
                                                         <i class="fa-solid fa-cross fa-lg" style="color: #0156ab;"></i> Add Tribute
                                                     </button>
                                                     <button type="button" class="btn bg-gradient-dark float-end mt-2 mx-2" data-bs-toggle="modal" data-bs-target="#donation-modal">
@@ -154,18 +162,17 @@
 
                                 <div>
                                     <% if (tributes.length > 1) { %>
-                                        <h4 class="text-center mb-4 mt-5"><%= tributes.length %> Tributes</h4>
+                                        <h4 class="text-center mb-4 mt-5" id="tribute_counter"><%= tributes.length %> Tributes</h4>
                                     <% } else if (tributes.length === 1) { %>
-                                        <h4 class="text-center mb-4 mt-5">1 Tribute</h4>
+                                        <h4 class="text-center mb-4 mt-5" id="tribute_counter">1 Tribute</h4>
                                     <% } else { %>
-                                        <h4 class="text-center mb-5 mt-5">No Tributes Yet</h4>
+                                        <h4 class="text-center mb-5 mt-5" id="tribute_counter">No Tributes Yet</h4>
                                         <p class="text-center lead">Be the first to write a tribute for our beloved Dr. Mrs. Juliana Chibuogwu Nwazuruoke</p>
                                     <% } %>
 
                                     <div id="tributes-list" class="justify-content">
                                         <% for (const tribute of tributes) { %>
-
-                                            <div class="d-flex" id="tribute-<%= tribute._id %>">
+                                            <div class="d-flex my-3" id="tribute-item-<%= tribute._id %>">
                                                 <div>
                                                     <a href="#">
                                                         <div class="position-relative">
@@ -181,7 +188,7 @@
                                                 <div class="ms-3">
                                                     <div class="d-flex justify-content-between">
                                                         <h6>
-                                                            <%= tribute.by.full_name %> 
+                                                            <%= tribute.by.full_name %>
                                                             <span class="text-muted text-xs tribute-timestamp">· <%= formatDate(tribute.on) %></span>
                                                         </h6>
 
@@ -199,10 +206,10 @@
 
                                                     <% if (isAuthenticated) { %>
                                                         <div class="ms-auto text-start mb-3 mt-0">
-                                                            <% if (user.is_admin) { %>
-                                                                <a href="#" class="btn text-dark px-2 btn-link" rel="tooltip" title="" data-original-title="Reply to Comment">
+                                                            <% if (user.is_admin || tribute.by._id.toString() === user._id.toString()) { %>
+                                                                <button class="btn text-dark px-2 btn-link" id="delete-tribute-button" rel="tooltip" data-tribute-id="<%= tribute._id %>" title="" data-original-title="delete tribute">
                                                                     <i class="fa-solid fa-trash-can fa-lg" style="color: #ff1c1c;"></i> Delete
-                                                                </a>
+                                                                </button>
                                                             <% } %>
                                                             <!-- <a href="#" class="btn text-danger px-2 btn-link">
                                                                 <i class="fas fa-heart"></i> 243
@@ -244,7 +251,7 @@
                                             <div class="img-container">
                                             </div>
                                         </div>
-                                        <button class="btn btn-icon btn-3 btn-info" type="button" id="send_data">
+                                        <button class="btn btn-icon btn-3 btn-info" type="button" id="upload_gallery">
                                             <span class="btn-inner--icon"><i class="fa-solid fa-upload fa-lg"></i></span>
                                             <span class="btn-inner--text">Upload</span>
                                         </button>
@@ -258,24 +265,25 @@
                         <div class="row min-vh-25 gallery-container" id="animated-thumbnails-gallery">
                             <% if (galleries) { %>
                                 <% for (const gallery of galleries) { %>
-                                    <div class="col-md-3 mb-3 mt-3 gallery-item" data-lg-size="1600-1067" data-src="<%= gallery.image %>" data-sub-html="<h4> Uploaded by <%= gallery.by.full_name%> </h4> <p> <%= gallery.description %> </p>">
-                                        <div class="position-relative" style="height: 200px;"> <!-- Set a fixed height for the container -->
+                                    <div class="col-md-3 mb-3 mt-3 gallery-item gallery-item-<%= gallery._id %>" data-lg-size="1600-1067" data-src="<%= gallery.image %>" data-sub-html="<h4> Uploaded by <%= gallery.by.full_name %> </h4> <p> <%= gallery.description %> </p>">
+                                        <div class="position-relative" style="height: 250px;"> <!-- Set a fixed height for the container -->
                                             <img alt="<%= gallery.by.full_name %>" class="w-100 h-100 border-radius-lg bg-cover img-responsive" src="<%= gallery.image %>"/>
-                                            <div class="d-flex justify-content-between">
-                                                <button type="button" class="btn badge bg-gradient-info text-white px-2 btn-link position-absolute top-0 start-0 m-1" id="view-gallery-button" data-gallery-id="<%= gallery._id %>">
-                                                    <i class="fa-solid fa-eye fa-lg"></i>
-                                                </button>
+                                            <div class="d-flex justify-content-end">
                                                 <% if (isAuthenticated) { %>
                                                     <% if (user.is_admin || gallery.by._id.toString() === user._id.toString()) { %>
-                                                        <button type="button" class="btn badge bg-gradient-danger text-white px-2 btn-link position-absolute top-0 end-0 m-1" id="delete-gallery-button" data-gallery-id="<%= gallery._id %>">
+                                                        <button type="button" class="btn badge bg-gradient-danger text-white px-2 mx-3 btn-link position-absolute top-0 end-10 m-1" id="delete-gallery-button" data-gallery-id="<%= gallery._id %>" onclick="handleDeleteButtonClick('<%= gallery._id %>')">
                                                             <i class="fa-solid fa-trash-can fa-lg"></i>
                                                         </button>
                                                     <% } %>
                                                 <% } %>
+                                                <button type="button" class="btn badge bg-gradient-info text-white px-2 btn-link position-absolute top-0 end-0 m-1" id="view-gallery-button" data-gallery-id="<%= gallery._id %>" onclick="handleViewButtonClick()">
+                                                    <i class="fa-solid fa-eye fa-lg"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
                                 <% } %>
+
                             <% } %>
                         </div>
                     </div>
@@ -289,6 +297,7 @@
                 <section class=" pt-md-5 pb-md-5 pt-lg-7">
                     <div class="container-fluid">
                         <div class="row justify-content-end">
+                            <!--Bio Menus here... -->
                             <div class="col-lg-3 mb-lg-0 mb-3">
                                 <ul class="nav flex-column bg-white border-radius-lg p-5 position-sticky top-1">
                                     <li class="nav-item">
@@ -326,11 +335,12 @@
                                 </ul>
                             </div>
 
+                            <!-- Bio Details here ... -->
                             <div class="col-lg-9">
                                 <div class="card mb-5">
                                     <div class="card-header bg-gradient-info p-3 position-relative">
                                         <div class="d-flex">
-                                            <div>
+                                            <div class="mt-3">
                                                 <a href="javascript:;">
                                                     <div class="position-relative">
                                                         <img class="avatar avatar-xxl rounded-circle shadow" src="https://res.cloudinary.com/geetechlab-com/image/upload/v1715207930/nwaben.com/chio/mum-removebg-preview_2_ybjjvc.png">
@@ -341,25 +351,137 @@
                                             <div class="ms-4 my-auto">
                                                 <h5 class="text-white">Dr. Mrs. Juliana Chibuogwu Nwazuruoke(Chio)</h5>
                                                 <small class="text-white">1956 - 2024</small>
+                                                <figure class="my-3 text-white">
+                                                    <blockquote class="blockquote">
+                                                    <small class="ps-3">
+                                                        “Make the most of yourself
+                                                        by fanning the tiny inner
+                                                        sparks of possibility
+                                                        into flames of achievements”
+                                                    </small>
+                                                    </blockquote>
+                                                    <figcaption class="blockquote-footer ps-3  text-white">
+                                                        By <cite title="Source Title">Golda Meir, <small>Former Prime Minister of Israel</small></cite>
+                                                    </figcaption>
+                                                </figure>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card-body p-5">
 
                                         <h3 class="mt-5 mb-3" id="biography_section">Biography</h3>
-                                        <p>Her bio goes here...</p>
+                                        <p class="text-dark">
+                                            The life and times of Dr Mrs Juliana Chibuogwu Nwazuruoke can 
+                                            hardly be fully chronicled within this short space, given the abruptness of her exit.
+                                        </p>
+                                        <p class="text-dark">
+                                            Dr Nwazuruoke’s story is one of character resilience, 
+                                            persistent hard work and tenacious faith in God. Her unassuming 
+                                            poise and soft spoken nature belies her innate gumptious drive that 
+                                            has manifestly blossomed into the pinnacle of her career and ultimate 
+                                            destination in life.
+                                        </p>
+                                        <p class="text-dark">
+                                            Born in Lagos to a middle class family of Chief John Chuka Nwosu (Ojuka), 
+                                            a budding senior civil servant at that time and Mrs Lauretta Nwadinafor Nwosu, 
+                                            a trained seamstress, both from Atani, Ogbaru Local Government Area, Chio, 
+                                            as she was fondly called, grew up in the midst of loving adolescent 
+                                            uncles and aunties who doted on her as a toddler.
+                                        </p>
 
 
                                         <h3 class="mt-5 mb-3" id="education_section">Education</h3>
-                                        <p>Education Section here...</p>
+                                        <p class="text-dark">
+                                            Dr Nwazuruoke started her primary school education at the Catholic Church 
+                                            owned Saint Mary’s Primary School, Broad Street, Lagos in 1962 and completed in 1966. 
+                                            At the end of the Nigerian Civil War, she proceeded to Abbot Girls Secondary School, 
+                                            Ihiala where she pursued science subjects and excelled with a grade one in the West 
+                                            African School Certificate examination.
+                                        </p>
+                                        <p class="text-dark">
+                                            Armed with a stellar Secondary School result, she planned to study medicine in 
+                                            Europe but this was aborted due to certain circumstances beyond the family’s control. 
+                                            Rather than waste precious time, she sat and passed the entrance examination into University 
+                                            of Benin Teaching Hospital to study Nursing. By 1979 she become a Registered Nurse (RN) 
+                                            and worked briefly at Nigerian Ports Authority (NPA), Medical Complex, Lagos as a Staff Nurse.
+                                        </p>
+                                        <p class="text-dark">
+                                            Now determined to pursue a career in the footsteps of Florence Nightingale and Marry Slessor, 
+                                            she enrolled with he University of Nigeria Teaching Hospital, Enugu to study Midwifery.
+                                        </p>
+                                        <p class="text-dark">
+                                            Still not satisfied, she moved on to University of Ibadan where she bagged a Bachelor of 
+                                            Sciences (BSc) degree in Nursing. It was during her academic sojourn at Ibadan that 
+                                            she met her husband, EmmanuelMary Nwazuruoke-NwaBen (then Emmanuel Nwazuruoke Ezenwa) 
+                                            from Achina, Anambra State whom she eventually wedded on the 16th of December 1989 four 
+                                            years after she left University of Ibadan.
+                                        </p>
 
 
                                         <h3 class="mt-5 mb-3" id="work_life_section">Work Life</h3>
-                                        <p>Work life section here...</p>
+                                        <p class="text-dark">
+                                            After her National Youth Service at Ahmadu Bello University Teaching Hospital School of Nursing, 
+                                            Zaria in 1986, her career took her through Saint Louis Hospital School of Midwifery, Zonkwa, 
+                                            Kaduna State from 1986 to 1989; Bishop Shanahan Hospital School of Nursing, Nsukka from 1989 
+                                            to 1990; Anambra State Ministry of Health from 1990 to 1991, and finally, Anambra State School 
+                                            of Nursing, Nkpor where she rose to the rank of Deputy Director of Nursing/Vice Principal 
+                                            (Admin) from 1991 - 2010. The upward mobility of her career didn’t end there. Between 2011 
+                                            to 2012, she she was transferred to Anambra State School of Midwifery, Nkpor still as Deputy 
+                                            Director of Nursing/Vice Principal.
+                                        </p>
+                                        <p class="text-dark">
+                                            In 2011, Dr Nwazuruoke moved to Chukwuemeka Odumegwu University Teaching Hospital 
+                                            School of Midwifery, Nkpor as Deputy Director of Nursing and the Principal of the 
+                                            institution before she retired in 2016.
+                                        </p>
+                                        <p class="text-dark">
+                                            Though Dr Juliana Chibuogwu Nwazuruoke retired from Anambra State Civil Service, 
+                                            she was obviously not tired of work as she immediately proceeded to Madonna University 
+                                            of Nigeria, Elele to become a Senior Lecturer and Head of Department of Nursing. 
+                                            She lectured there between 2017 and 2021 before she was appointed the Provost of 
+                                            Anambra State College of Nursing Sciences in 2022, a position she held till she passed on.
+                                        </p>
+                                        <p class="text-dark">
+                                            Throughout her work career, Dr Nwazuruoke did not seize to acquire more knowledge in a bid 
+                                            to give her best to the vocation she had wholeheartedly embraced.
+                                        </p>
+                                        <p class="text-dark">
+                                            To prepare herself as an academic after her National Youth Service, she picked a Post Graduate 
+                                            Diploma in Education and double Masters of Sciences degrees each in Health Education and, Maternity 
+                                            and Child Health Nursing. She finally put the icing on the cake when she earned a PhD in Maternity 
+                                            and Child Health Nursing after an expository research into “Infant weight gain and feeding practices 
+                                            in the first six months of life in rural and urban areas of Anambra State.”
+                                        </p>
+                                        <p class="text-dark">
+                                            In addition to this, she has carried over half a dozen researches in her chosen fields study and 
+                                            published eighteen seminal works in international journals.
+                                        </p>
+                                        <p class="text-dark">
+                                            Dr Juliana Chibuogwu Nwazuruoke has been an external examiner of Nursing and Midwifery Council 
+                                            of Nigeria (NMCN) from 1996 till her death. She was the National President of the Catholic Nurses 
+                                            Guild of Nigeria from 2006 to 2012 and was the Africa Regional President of the International Catholic 
+                                            Committee of Nurses and Medico-Social Assistants (CICIAMS) from 2012 - 2016.
+                                        </p>
 
 
                                         <h3 class="mt-5 mb-3" id="hyperlinking">Family</h3>
-                                        <p>Family Section goes here...</p>
+                                        <p class="text-dark">
+                                            A devout Catholic till death, Dr Nwazuruoke was the President of Catholic Women Organisation (CWO), 
+                                            Our Lady of Fatima Parish, Woliwo, Onitsha between 2009 and 2012. A happily married woman with 
+                                            four adult children (a lady and three young men), she served on the Marriage Advisory Council of 
+                                            Onitsha Archdiocese as the Secretary from 2008 till her sudden demise. She was a member of the Pro-Life 
+                                            Association of Nigeria (P.L.A.N) and many years had been an instructor of the Billings method of 
+                                            Natural Family Planning.
+                                        </p>
+                                        <p class="text-dark">
+                                            Dr Juliana Chibuogwu Nwazuruoke left behind four children, a grandchild, daughter-in-law, 
+                                            seven siblings, sisters and brothers-in-law, an uncle, many cousins and numerous friends, 
+                                            all of whom will forever miss her friendly warmth, kindness, wise council, motherliness and deep sense 
+                                            of commitment to both Nwazuruoke and Nwosu families. 
+                                        </p>
+                                        <p class="text-dark">
+                                            May her soul and souls of all the faithful departed, through the mercy of God, rest in peace. Amen!
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -388,7 +510,7 @@
             </div>
             <div class="modal-body">
                 <div class="py-2 px-3 text-center">
-                    <form>
+                    <!-- <form>
                         <div class="form-group">
                             <label for="donation_currency">Select Currency</label>
                             <select class="form-control" id="donation_currency">
@@ -407,7 +529,27 @@
                             </button>
                             <button type="button" class="btn btn-link text-danger ml-auto" data-bs-dismiss="modal">Close</button>
                         </div>
-                    </form>
+                    </form> -->
+                    <p class="text-center">
+                        Please donate generously to the accounts below...
+                        <div class="card card-frame">
+                            <div class="card-body">
+                                Bank: UBA Bank<br>
+                                Account: 20773992668<br>
+                                Name: Gerard Nwazuruoke
+                            </div>
+                            <div class="mt-1 mb-1 position-relative text-center">
+                                <p class="text-sm font-weight-bold text-secondary text-border d-inline z-index-2 bg-white px-3">
+                                    or Donate to
+                                </p>
+                            </div>
+                            <div class="card-body">
+                                Bank: Access Bank<br>
+                                Account: 1856844242<br>
+                                Name: Jude Nwazuruoke
+                            </div>
+                        </div>
+                    </p>
                 </div>
             </div>
             <!-- <div class="modal-footer">
@@ -424,13 +566,19 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/assets/customs/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/lightgallery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/plugins/comment/lg-comment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/plugins/autoplay/lg-autoplay.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/plugins/share/lg-share.min.js"></script>
 
 
 
 <!--Tribute upload-->
 <script>
+
     // Function to handle form submission
     const handleFormSubmit = async () => {
+        toggleButtonText(true, "upload_tribute", `<i class="fa-solid fa-cross fa-lg" style="color: #0156ab;"></i> Add Tribute`);
         try {
             // Capture form data
             const tributeText = document.getElementById('tribute_text').value;
@@ -447,8 +595,10 @@
 
             // Handle success
             console.log('Success:', response.data);
+            toggleButtonText(false, "upload_tribute", `<i class="fa-solid fa-cross fa-lg" style="color: #0156ab;"></i> Add Tribute`);
             successToast(response.data.status, response.data.message)
         } catch (error) {
+            toggleButtonText(false, "upload_tribute", `<i class="fa-solid fa-cross fa-lg" style="color: #0156ab;"></i> Add Tribute`);
             // Handle error
             console.error('Error:', error);
             errorToast(response.data.status, response.data.message)
@@ -466,10 +616,41 @@
 
 
 
+<!--Tribute Delete-->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const delTributeBtns = document.querySelectorAll('#delete-tribute-button');
+
+        // Attach event listener for delete buttons
+        delTributeBtns.forEach(button => {
+            button.addEventListener('click', async (event) => {
+                const tributeId = button.getAttribute('data-tribute-id');
+                console.log(`tributeId: ${tributeId}`);
+                try {
+                    // Send delete request to backend
+                    const response = await axios.delete(`/tribute/delete/${tributeId}`, {
+                        id: tributeId
+                    });
+                    console.log(`response: ${response.data}`)
+                    if (response.data.status) {
+                        successToast(response.data.status, response.data.message)
+                    }
+                } catch (error) {
+                    console.error('Error deleting gallery item:', error);
+                    errorToast(response.data.status, response.data.message)
+                    errorToast("error", `Tribute with ID ${tributeId} not found`)
+                }
+            })
+        });
+    })
+</script>
+
+
+
 <!--Gallery image upload-->
 <script type="text/javascript">
     let files = []
-    let submit_btn = document.querySelector("#send_data");
+    let submit_btn = document.querySelector("#upload_gallery");
     let upload_form = document.querySelector(".upload-form");
     let container = document.querySelector(".img-container");
     let text = document.querySelector(".inner");
@@ -539,7 +720,8 @@
 
     // Submit to backend...
     submit_btn.addEventListener('click', () => {
-        toggleButtonText(true, "send_data");
+        toggleButtonText(true, "upload_gallery", `<span class="btn-inner--icon"><i class="fa-solid fa-upload fa-lg"></i></span>
+        <span class="btn-inner--text">Upload</span>`);
         let formData = new FormData();
 
         for(let file of files) {
@@ -553,13 +735,22 @@
         })
         .then(response => response.json()) // Parse response JSON
         .then(data => {
-            toggleButtonText(false, "send_data");
+            toggleButtonText(false, "upload_gallery", `<span class="btn-inner--icon"><i class="fa-solid fa-upload fa-lg"></i></span>
+            <span class="btn-inner--text">Upload</span>`);
             if (data.status === "success") {
-                successToast("success", "Image uploaded successfully.")
+                console.log(data.message)
+                successToast("success", data.message);
+                // Clear the files array to remove the displayed images
+                files = [];
+                // Update the displayed images
+                showImages();
+                // Reset the input value to clear the selection
+                input.value = null;
             }
         })
         .catch(error => {
-            toggleButtonText(false, "send_data");
+            toggleButtonText(false, "upload_gallery", `<span class="btn-inner--icon"><i class="fa-solid fa-upload fa-lg"></i></span>
+            <span class="btn-inner--text">Upload</span>`);
             console.log(error);
             errorToast("error", "Image upload error");
         });
@@ -568,55 +759,48 @@
 </script>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/lightgallery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/plugins/comment/lg-comment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/plugins/autoplay/lg-autoplay.min.js"></script>
 
-
+<!-- Delete Gallery Image -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        let lightGalleryInstance = null; // Variable to store the LightGallery instance
-    
-        const deleteButtons = document.querySelectorAll('#delete-gallery-button');
-        const galleryContainer = document.getElementById('animated-thumbnails-gallery');
-    
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', async function() {
-                // Check if LightGallery instance exists and destroy it
-                if (lightGalleryInstance) {
-                    lightGalleryInstance.destroy();
-                    lightGalleryInstance = null;
-                }
+    let lightGalleryInstance = null;
+    const galleryContainer = document.getElementById('animated-thumbnails-gallery');
 
-                const galleryId = button.getAttribute('data-gallery-id');
-                console.log(`galleryId: ${galleryId}`);
-                try {
-                    // Send delete request to backend
-                    const response = await axios.delete(`/gallery/${galleryId}`);
-                    if (response.data.success) {
-                        // Remove gallery item from DOM
-                        galleryItem.remove();
-                    }
-                } catch (error) {
-                    console.error('Error deleting gallery item:', error);
-                }
+    // Function to handle delete button click
+    async function handleDeleteButtonClick(galleryId) {
+        console.log('Delete button clicked for gallery with ID:', galleryId);
+        // Check if LightGallery instance exists and destroy it
+        if (lightGalleryInstance) {
+            lightGalleryInstance.destroy();
+            lightGalleryInstance = null;
+        }
+
+        console.log(`galleryId: ${galleryId}`);
+        try {
+            // Send delete request to backend
+            const response = await axios.delete(`/gallery/delete/${galleryId}`, {
+                id: galleryId
             });
-        });
-    
-        const viewButtons = document.querySelectorAll('#view-gallery-button');
-        viewButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Check if LightGallery instance already exists
-                if (!lightGalleryInstance) {
-                    // Create LightGallery instance
-                    lightGalleryInstance = lightGallery(galleryContainer, {
-                        thumbnail: true,
-                        controls: true,
-                        download: false,
-                        plugins: [lgAutoplay]
-                    });
-                }
+            console.log(`response: ${response.data.status}`)
+            if (response.data.status === "success") {
+                successToast(response.data.status, response.data.message)
+            }
+        } catch (error) {
+            console.error('Error deleting gallery item:', error);
+            errorToast(response.data.status, response.data.message)
+        }
+    }
+
+    // Function to handle view button click
+    function handleViewButtonClick() {
+        // Check if LightGallery instance already exists
+        if (!lightGalleryInstance) {
+            // Create LightGallery instance
+            lightGalleryInstance = lightGallery(galleryContainer, {
+                thumbnail: true,
+                controls: true,
+                download: false,
+                plugins: [lgAutoplay, lgShare]
             });
-        });
-    });
+        }
+    }
 </script>

@@ -120,7 +120,7 @@ data-lg-id="4db3e480-782b-4865-a4d0-5b486bcaf8df">
 
 
 
-<script>
+<!-- <script>
     // Add an event listener to handle delete button clicks
     document.addEventListener('click', async (event) => {
         if (event.target.classList.contains('delete-btn')) {
@@ -147,4 +147,151 @@ data-lg-id="4db3e480-782b-4865-a4d0-5b486bcaf8df">
             }
         }
     });
-</script>
+</script> -->
+
+
+
+
+
+
+
+
+<div>
+    <a href="#">
+        <div class="position-relative">
+            ${tribute.by && tribute.by.profile && tribute.by.profile.image ? 
+                `<img class="avatar rounded-circle shadow" src="${tribute.by.profile.image}" alt="${tribute.by.full_name}">` :
+                `<img class="avatar rounded-circle shadow" src="https://res.cloudinary.com/geetechlab-com/image/upload/v1583147406/nwaben.com/user_azjdde_sd2oje.jpg" alt="Default User">`}
+        </div>
+    </a>
+</div>
+<div class="ms-3">
+    <div class="d-flex justify-content-between">
+        <h6>
+            ${tribute.by.full_name}
+            <span class="text-muted text-xs tribute-timestamp">· ${formatDate(tribute.on)}</span>
+        </h6>
+        ${tribute.category === "candle" ? 
+            '<img class="px-2" src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/48/000000/external-candles-pharmaceutical-flaticons-lineal-color-flat-icons-2.png"/>' :
+            tribute.category === "flower" ? 
+            '<img class="px-2" src="https://img.icons8.com/color/48/000000/bunch-flowers.png"/>' :
+            '<img class="px-2" src="https://img.icons8.com/color/48/000000/scroll.png"/>'}
+    </div>
+    <p>${tribute.tribute_text}</p>
+    <% if (isAuthenticated) { %>
+        <div class="ms-auto text-start mb-3 mt-0">
+            <% if (user.is_admin || tribute.by._id.toString() === user._id.toString()) { %>
+                <button class="btn text-dark px-2 btn-link delete-tribute-button" id="delete-tribute-button" data-tribute-id="${tribute._id}" rel="tooltip" title="" data-original-title="Delete Tribute">
+                    <i class="fa-solid fa-trash-can fa-lg" style="color: #ff1c1c;"></i> Delete
+                </button>
+            <% } %>
+            <!-- <a href="#" class="btn text-danger px-2 btn-link">
+                <i class="fas fa-heart"></i> 243
+            </a> -->
+        </div>
+    <% } %>
+</div>
+
+
+
+
+
+
+
+
+
+// Listen for deleted tributes
+socket.on('delete-tribute', tributeId => {
+    // Handle the deletion on the frontend
+    console.log(`Tribute with ID ${tributeId} has been deleted`);
+
+    // Find the gallery element with the matching data-gallery-id attribute and remove it from the DOM
+    const tributeElement = document.querySelector(`#tribute-item-${tributeId}`);
+    console.log(`tributeElement: ${tributeElement}`)
+    if (tributeElement) {
+        tributeElement.remove();
+        successToast("success", "Tribute deleted successfully")
+    } else {
+        console.log(`Tribute with ID ${tributeId} not found in the DOM`);
+        errorToast("error", `Tribute with ID ${tributeId} not found`)
+    }
+});
+
+
+
+
+socket.on('new-gallery', (gallery) => {
+    const galleryContainer = document.getElementById('animated-thumbnails-gallery');
+    const galleryItemDiv = document.createElement('div');
+    galleryItemDiv.innerHTML = `
+        <div class="col-md-3 mb-3 mt-3 gallery-item" data-lg-size="1600-1067" data-src="${gallery.image}" data-sub-html="<h4> Uploaded by ${gallery.by.full_name} </h4> <p> ${gallery.description} </p>">
+            <div class="position-relative" style="height: 200px;"> <!-- Set a fixed height for the container -->
+                <img alt="${gallery.by.full_name}" class="w-100 h-100 border-radius-lg bg-cover img-responsive" src="${gallery.image}"/>
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn badge bg-gradient-info text-white px-2 btn-link position-absolute top-0 start-0 m-1" id="view-gallery-button" data-gallery-id="${gallery._id}">
+                        <i class="fa-solid fa-eye fa-lg"></i>
+                    </button>
+                    <% if (isAuthenticated) { %>
+                        <% if (user.is_admin || gallery.by._id.toString() === user._id.toString()) { %>
+                            <button type="button" class="btn badge bg-gradient-danger text-white px-2 btn-link position-absolute top-0 end-0 m-1" id="delete-gallery-button" data-gallery-id="${gallery._id}">
+                                <i class="fa-solid fa-trash-can fa-lg"></i>
+                            </button>
+                        <% } %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    `;
+    galleryContainer.prepend(galleryItemDiv.firstChild);
+});
+
+
+
+// Listen for the 'delete-gallery' event from the server
+socket.on('delete-gallery', (galleryId) => {
+    // Handle the deletion on the frontend
+    console.log(`Gallery with ID ${galleryId} has been deleted`);
+
+    // Find the gallery element with the matching data-gallery-id attribute and remove it from the DOM
+    const galleryElement = document.querySelector(`.gallery-item-${galleryId}`);
+    console.log(`galleryElement: ${galleryElement}`)
+    if (galleryElement) {
+        galleryElement.remove();
+        successToast("success", "Media deleted successfully")
+    } else {
+        console.log(`Gallery with ID ${galleryId} not found in the DOM`);
+        errorToast("error", "Media deleted successfully")
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-md-3 mb-3 mt-3 gallery-item gallery-item-66451b67c2e0a710d707a17c" data-lg-size="1600-1067" data-src="https://res.cloudinary.com/geetechlab-com/image/upload/v1715805033/gallery_images/yqs3sf3aypfy3sk31hbe.jpg" data-sub-html="<h4> Uploaded by Geet CyberLab </h4> <p>  </p>">
+    <div class="position-relative" style="height: 250px;"> <!-- Set a fixed height for the container -->
+        <img alt="Geet CyberLab" class="w-100 h-100 border-radius-lg bg-cover img-responsive" src="https://res.cloudinary.com/geetechlab-com/image/upload/v1715805033/gallery_images/yqs3sf3aypfy3sk31hbe.jpg"/>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn badge bg-gradient-danger text-white px-2 mx-3 btn-link position-absolute top-0 end-10 m-1" id="delete-gallery-button" data-gallery-id="66451b67c2e0a710d707a17c">
+                <i class="fa-solid fa-trash-can fa-lg"></i>
+            </button>
+            <button type="button" class="btn badge bg-gradient-info text-white px-2 btn-link position-absolute top-0 end-0 m-1" id="view-gallery-button" data-gallery-id="66451b67c2e0a710d707a17c">
+                <i class="fa-solid fa-eye fa-lg"></i>
+            </button>
+        </div>
+    </div>
+</div>

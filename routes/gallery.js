@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Gallery = require('../models/Gallery');
 const { isAuthenticated } = require('../middleware/isAuthenticated');
-
+const User = require('../models/User');
 const upload = require('../config/storage');
 const cloudinary = require('cloudinary').v2;
 const fs = require("fs");
@@ -32,7 +32,6 @@ function asyncGalleryRoute(io) {
 
     router.post("/create", isAuthenticated, upload.array("images"), async (req, res) => {
         try {
-            console.log(`req.files: ${req.files}`)
             // Check if files were uploaded
             if (!req.files || req.files.length === 0) {
                 return res.status(400).json({ status: 'error', message: 'No files uploaded' });
@@ -58,10 +57,17 @@ function asyncGalleryRoute(io) {
                 return await gallery.save();
             }));
 
+            const user = req.user || null;
+
             // Emit event for new galleries
-            galleries.forEach(gallery => {
-                io.emit('new-gallery', gallery);
-            });
+            for (const gallery of galleries) {
+                const instance = await Gallery.findById(gallery._id).populate({
+                    path: 'by',
+                    select: 'full_name is_admin'
+                });
+                // Emit the event
+                io.emit('new-gallery', instance, user);
+            }
 
             res.status(201).json({
                 status: 'success',
@@ -75,21 +81,25 @@ function asyncGalleryRoute(io) {
     });
 
 
-
+    // Delete an Image
     router.delete('/delete/:id', isAuthenticated, async (req, res) => {
         try {
             const { id } = req.params;
+            console.log(`gallery_id: ${id}`);
             const gallery = await Gallery.findByIdAndDelete(id);
 
             if (!gallery) {
-                return res.status(404).send('Media not found');
+                return res.status(404).json({status: 'error', message: 'Media not found'});
             }
 
-            io.emit('delete-gallery', id);
-            res.status(200).send('Media deleted successfully');
+            // Fetch user details and populate profile
+            const user = await User.findById(gallery.by._id).populate('profile');
+
+            io.emit('delete-gallery', id, user);
+            res.status(200).json({status:"success", message: 'Media deleted successfully'});
         } catch (error) {
             console.error('Error deleting Media:', error);
-            res.status(500).send('Server Error');
+            res.status(500).json({status: "error", message: 'Server Error'});
         }
     });
 

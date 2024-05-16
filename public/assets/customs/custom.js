@@ -1,16 +1,32 @@
-function toggleButtonText(loading, id) {
-    let button = document.getElementById(id); // Replace 'your-button-id' with the actual ID of your button
-    let originalText = button.textContent;
-    let loadingIcon = '<i class="fa-solid fa-spinner fa-spin fa-lg"></i>'; // Replace this with your loading icon HTML
-    console.log(`innerText: ${originalText}`)
+// function toggleButtonText(loading, id) {
+//     let button = document.getElementById(id);
+//     let originalText = button.textContent;
+//     let loadingIcon = '<i class="fa-solid fa-spinner fa-spin fa-lg"></i>';
+//     console.log(`innerText: ${originalText}`)
 
-    if (loading) {
-        button.innerHTML = loadingIcon;
-        button.disabled = true; // Optionally disable the button while loading
-    } else {
-        button.innerHTML = originalText;
-        button.disabled = false; // Re-enable the button
-    }
+//     if (loading) {
+//         button.innerHTML = loadingIcon;
+//         button.disabled = true;
+//     } else {
+//         button.innerHTML = originalText;
+//         button.disabled = false;
+//     }
+// }
+
+function toggleButtonText(loading, btnID, btnText) {
+  let button = document.getElementById(btnID);
+  let spinnerIcon = document.createElement("i");
+
+  spinnerIcon.className = "fa-solid fa-spinner fa-xl fa-spin";
+
+  if (loading) {
+      // Hide button text and display spinner icon
+      button.innerHTML = '';
+      button.appendChild(spinnerIcon);
+  } else {
+      // Display button text and hide spinner icon
+      button.innerHTML = btnText; // Replace "Your Button Text" with the actual text of your button
+  }
 }
 
 

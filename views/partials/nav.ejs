@@ -1,8 +1,9 @@
 
-<nav class="navbar navbar-expand-lg bg-white  navbar-transparent position-fixed w-100 top-0 z-index-3 shadow-none py-2 start-0 end-0" id="navbarPresentationShadow">
+<!-- <nav class="navbar navbar-expand-lg bg-white  navbar-transparent position-fixed w-100 top-0 z-index-3 shadow-none py-2 start-0 end-0" id="navbarPresentationShadow"> -->
+<nav class="navbar navbar-expand-lg navbar-light shadow-sm bg-white position-fixed w-100 top-0 z-index-3 shadow-none py-2 start-0 end-0">
     <div class="container pt-1">
         <a class="navbar-brand font-weight-bolder ms-sm-3" href="/" rel="tooltip" title="Designed and Coded by Gerard Nwazuruoke(Son)" data-placement="bottom">
-            <img alt="Logo" style="height: 30px; width: 30px;" src="../../assets/img/logo.png">
+            <img alt="Logo" style="height: 30px; width: 30px;" src="/assets/img/logo.png">
         </a>
         <% if (isAuthenticated) { %>
             <a href="/auth/logout" class="btn btn-sm  bg-gradient-info  btn-round mb-0 ms-auto d-lg-none d-block">Logout</a>
@@ -10,7 +11,7 @@
             <a href="/auth/login" class="btn btn-sm  bg-gradient-info  btn-round mb-0 ms-auto d-lg-none d-block">Login</a>
         <% } %>
         <button class="navbar-toggler shadow-none ms-md-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon mt-2">
+            <span class="navbar-toggler-icon mt-2 text-dark">
                 <span class="navbar-toggler-bar bar1"></span>
                 <span class="navbar-toggler-bar bar2"></span>
                 <span class="navbar-toggler-bar bar3"></span>
