@@ -170,65 +170,68 @@
 
 
                                 <div>
-                                    <% if (tributes.length > 1) { %>
-                                        <h4 class="text-center mb-4 mt-5" id="tribute_counter"><%= tributes.length %> Tributes</h4>
-                                    <% } else if (tributes.length === 1) { %>
-                                        <h4 class="text-center mb-4 mt-5" id="tribute_counter">1 Tribute</h4>
-                                    <% } else { %>
-                                        <h4 class="text-center mb-5 mt-5" id="tribute_counter">No Tributes Yet</h4>
-                                        <p class="text-center lead" id="tribute_counter_text">Be the first to write a tribute for our beloved Dr. Mrs. Juliana Chibuogwu Nwazuruoke</p>
+                                    <% if (tributes) { %>
+                                        <% if (tributes.length > 1) { %>
+                                            <h4 class="text-center mb-4 mt-5" id="tribute_counter"><%= tributes.length %> Tributes</h4>
+                                        <% } else if (tributes.length === 1) { %>
+                                            <h4 class="text-center mb-4 mt-5" id="tribute_counter">1 Tribute</h4>
+                                        <% } else { %>
+                                            <h4 class="text-center mb-5 mt-5" id="tribute_counter">No Tributes Yet</h4>
+                                            <p class="text-center lead" id="tribute_counter_text">Be the first to write a tribute for our beloved Dr. Mrs. Juliana Chibuogwu Nwazuruoke</p>
+                                        <% } %>
                                     <% } %>
 
                                     <div id="tributes-list" class="justify-content">
-                                        <% for (const tribute of tributes) { %>
-                                            <div class="d-flex my-3" id="tribute-item-<%= tribute._id %>">
-                                                <div>
-                                                    <a href="#">
-                                                        <div class="position-relative">
-                                                            <!-- Display the profile image of the user who created the tribute -->
-                                                            <% if (tribute.by && tribute.by.profile && tribute.by.profile.image) { %>
-                                                                <img class="avatar rounded-circle shadow" src="<%= tribute.by.profile.image %>" alt="<%= tribute.by.full_name %>">
+                                        <% if (tributes) { %>
+                                            <% for (const tribute of tributes) { %>
+                                                <div class="d-flex my-3" id="tribute-item-<%= tribute._id %>">
+                                                    <div>
+                                                        <a href="#">
+                                                            <div class="position-relative">
+                                                                <!-- Display the profile image of the user who created the tribute -->
+                                                                <% if (tribute.by && tribute.by.profile && tribute.by.profile.image) { %>
+                                                                    <img class="avatar rounded-circle shadow" src="<%= tribute.by.profile.image %>" alt="<%= tribute.by.full_name %>">
+                                                                <% } else { %>
+                                                                    <img class="avatar rounded-circle shadow" src="https://res.cloudinary.com/geetechlab-com/image/upload/v1583147406/nwaben.com/user_azjdde_sd2oje.jpg" alt="Default User">
+                                                                <% } %>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="ms-3">
+                                                        <div class="d-flex justify-content-between">
+                                                            <h6>
+                                                                <%= tribute.by.full_name %>
+                                                                <span class="text-muted text-xs tribute-timestamp">· <%= formatDate(tribute.on) %></span>
+                                                            </h6>
+
+                                                            <% if (tribute.category === "candle") { %>
+                                                                <img class="px-2" src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/48/000000/external-candles-pharmaceutical-flaticons-lineal-color-flat-icons-2.png"/>
+                                                            <% } else if (tribute.category === "flower") { %>
+                                                                <img class="px-2" src="https://img.icons8.com/color/48/000000/bunch-flowers.png"/>
                                                             <% } else { %>
-                                                                <img class="avatar rounded-circle shadow" src="https://res.cloudinary.com/geetechlab-com/image/upload/v1583147406/nwaben.com/user_azjdde_sd2oje.jpg" alt="Default User">
+                                                                <img class="px-2" src="https://img.icons8.com/color/48/000000/scroll.png"/>
                                                             <% } %>
                                                         </div>
-                                                    </a>
-                                                </div>
-                                                <div class="ms-3">
-                                                    <div class="d-flex justify-content-between">
-                                                        <h6>
-                                                            <%= tribute.by.full_name %>
-                                                            <span class="text-muted text-xs tribute-timestamp">· <%= formatDate(tribute.on) %></span>
-                                                        </h6>
 
-                                                        <% if (tribute.category === "candle") { %>
-                                                            <img class="px-2" src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/48/000000/external-candles-pharmaceutical-flaticons-lineal-color-flat-icons-2.png"/>
-                                                        <% } else if (tribute.category === "flower") { %>
-                                                            <img class="px-2" src="https://img.icons8.com/color/48/000000/bunch-flowers.png"/>
-                                                        <% } else { %>
-                                                            <img class="px-2" src="https://img.icons8.com/color/48/000000/scroll.png"/>
+                                                        <!-- Display the tribute text -->
+                                                        <p class="text-dark font-weight-bold"><%= tribute.tribute_text %></p>
+
+                                                        <% if (isAuthenticated) { %>
+                                                            <div class="ms-auto text-start mb-3 mt-0">
+                                                                <% if (user.is_admin || tribute.by._id.toString() === user._id.toString()) { %>
+                                                                    <button class="btn text-dark px-2 btn-link" id="delete-tribute-button" rel="tooltip" data-tribute-id="<%= tribute._id %>" title="" data-original-title="delete tribute">
+                                                                        <i class="fa-solid fa-trash-can fa-lg" style="color: #ff1c1c;"></i> Delete
+                                                                    </button>
+                                                                <% } %>
+                                                                <!-- <a href="#" class="btn text-danger px-2 btn-link">
+                                                                    <i class="fas fa-heart"></i> 243
+                                                                </a> -->
+                                                            </div>
                                                         <% } %>
                                                     </div>
-
-                                                    <!-- Display the tribute text -->
-                                                    <p class="text-dark font-weight-bold"><%= tribute.tribute_text %></p>
-
-                                                    <% if (isAuthenticated) { %>
-                                                        <div class="ms-auto text-start mb-3 mt-0">
-                                                            <% if (user.is_admin || tribute.by._id.toString() === user._id.toString()) { %>
-                                                                <button class="btn text-dark px-2 btn-link" id="delete-tribute-button" rel="tooltip" data-tribute-id="<%= tribute._id %>" title="" data-original-title="delete tribute">
-                                                                    <i class="fa-solid fa-trash-can fa-lg" style="color: #ff1c1c;"></i> Delete
-                                                                </button>
-                                                            <% } %>
-                                                            <!-- <a href="#" class="btn text-danger px-2 btn-link">
-                                                                <i class="fas fa-heart"></i> 243
-                                                            </a> -->
-                                                        </div>
-                                                    <% } %>
                                                 </div>
-                                            </div>
+                                            <% } %>
                                         <% } %>
-
                                     </div>
                                 </div>
                             </div>
