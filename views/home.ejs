@@ -64,18 +64,27 @@
                         <div class="nav-wrapper position-relative end-0 mt-5">
                             <ul class="nav nav-pills nav-fill rounded-pill flex-row p-1" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link mb-0 px-0 py-1 rounded-pill active" data-bs-toggle="tab" href="#tribute_widget" role="tab" aria-selected="true">
+                                    <a class="nav-link mb-0 px-0 py-1 rounded-pill memorial-nav-link active" data-bs-toggle="tab" href="#tribute_widget" role="tab" aria-selected="true">
                                         <i class="fa-solid fa-cross fa-lg" style="color: #0053ae;"></i> Tribute
+                                        <span class="badge badge-danger p-0 m-0 position-absolute" id="tribute-badge" style="display: none;">
+                                            <i class="fa-solid fa-circle fa-beat fa-xs"></i>
+                                        </span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link mb-0 px-0 py-1 rounded-pill" data-bs-toggle="tab" href="#gallery_widget" role="tab" aria-controls="gallery_widget" aria-selected="false">
+                                    <a class="nav-link memorial-nav-link mb-0 px-0 py-1 rounded-pill" data-bs-toggle="tab" href="#gallery_widget" role="tab" aria-controls="gallery_widget" aria-selected="false">
                                         <i class="fa-solid fa-photo-film fa-lg" style="color: #b3005e;"></i> Gallery
+                                        <span class="badge badge-danger p-0 m-0 position-absolute" id="gallery-badge" style="display: none;">
+                                            <i class="fa-solid fa-circle fa-beat fa-xs"></i>
+                                        </span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link mb-0 px-0 py-1 rounded-pill" data-bs-toggle="tab" href="#biography_widget" role="tab" aria-controls="biography_widget" aria-selected="false">
+                                    <a class="nav-link mb-0 px-0 py-1 memorial-nav-link rounded-pill" data-bs-toggle="tab" href="#biography_widget" role="tab" aria-controls="biography_widget" aria-selected="false">
                                         <i class="fa-solid fa-book fa-lg" style="color: #8c8200;"></i> Biography
+                                        <span class="badge badge-danger p-0 m-0 position-absolute" id="biography-badge" style="display: none;">
+                                            <i class="fa-solid fa-circle fa-beat fa-xs"></i>
+                                        </span>
                                     </a>
                                 </li>
                             </ul>
@@ -141,7 +150,7 @@
                                                 </div>
 
 
-                                                <textarea class="form-control border-radius-lg" rows="4" name="tribute_text" id="tribute_text" required>
+                                                <textarea class="form-control border-radius-lg" placeholder="Please write your tribute here..." rows="4" name="tribute_text" id="tribute_text" required>
                                                 </textarea>
 
                                                 <div>
@@ -167,7 +176,7 @@
                                         <h4 class="text-center mb-4 mt-5" id="tribute_counter">1 Tribute</h4>
                                     <% } else { %>
                                         <h4 class="text-center mb-5 mt-5" id="tribute_counter">No Tributes Yet</h4>
-                                        <p class="text-center lead">Be the first to write a tribute for our beloved Dr. Mrs. Juliana Chibuogwu Nwazuruoke</p>
+                                        <p class="text-center lead" id="tribute_counter_text">Be the first to write a tribute for our beloved Dr. Mrs. Juliana Chibuogwu Nwazuruoke</p>
                                     <% } %>
 
                                     <div id="tributes-list" class="justify-content">
@@ -202,7 +211,7 @@
                                                     </div>
 
                                                     <!-- Display the tribute text -->
-                                                    <p><%= tribute.tribute_text %></p>
+                                                    <p class="text-dark font-weight-bold"><%= tribute.tribute_text %></p>
 
                                                     <% if (isAuthenticated) { %>
                                                         <div class="ms-auto text-start mb-3 mt-0">
@@ -570,6 +579,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/plugins/comment/lg-comment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/plugins/autoplay/lg-autoplay.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/plugins/share/lg-share.min.js"></script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const textarea = document.getElementById('tribute_text');
+        textarea.value = textarea.value.trim();
+    });
+</script>
 
 
 

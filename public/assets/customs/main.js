@@ -32,13 +32,16 @@ socket.on('new-tribute', (tribute) => {
                         '<img class="px-2" src="https://img.icons8.com/color/48/000000/bunch-flowers.png"/>' :
                         '<img class="px-2" src="https://img.icons8.com/color/48/000000/scroll.png"/>'}
                 </div>
-                <p>${tribute.tribute_text}</p>
+                <p class="text-dark font-weight-bold">${tribute.tribute_text}</p>
             </div>
         </div>
     `;
 
     // Insert the new tribute div at the top of the list
     tributeListDiv.prepend(tributeDiv);
+
+    // Show the badge for tribute updates
+    document.getElementById('tribute-badge').style.display = 'inline-block';
 
     // Update the count of tributes
     const countHeader = document.querySelector('#tribute_counter');
@@ -49,6 +52,11 @@ socket.on('new-tribute', (tribute) => {
 
         // Update the header text based on the new count
         countHeader.textContent = newCount > 1 ? `${newCount} Tributes` : '1 Tribute';
+    }
+
+    const countBody = document.querySelector('#tribute_counter_text');
+    if (countBody) {
+        countBody.remove();
     }
 });
 
@@ -106,6 +114,9 @@ socket.on('new-gallery', (gallery, user) => {
 
     // Prepend the new gallery item to the gallery container
     galleryContainer.prepend(galleryItemDiv.firstElementChild);
+
+    // Show the badge for gallery updates
+    document.getElementById('gallery-badge').style.display = 'inline-block';
 });
 
 
@@ -127,3 +138,16 @@ socket.on('delete-gallery', (galleryId, user) => {
     }
 });
 
+
+
+
+// Add click event listeners to buttons to hide the badge when clicked
+document.querySelectorAll('.memorial-nav-link').forEach(button => {
+    button.addEventListener('click', () => {
+        // Hide the badge when the button is clicked
+        const badge = button.querySelector('.badge');
+        if (badge) {
+            badge.style.display = 'none';
+        }
+    });
+});

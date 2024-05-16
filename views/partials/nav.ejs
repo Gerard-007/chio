@@ -24,11 +24,15 @@
                         Home
                     </a>
                 </li>
-                <li class="nav-item dropdown dropdown-hover mx-2">
-                    <a href="" class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center text-dark">
-                        Tribute
-                    </a>
-                </li>
+                <% if (isAuthenticated) { %>
+                    <% if (user.is_admin) { %>
+                        <li class="nav-item dropdown dropdown-hover mx-2">
+                            <a href="/dashboard" class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center text-dark">
+                                Dashboard
+                            </a>
+                        </li>
+                    <% } %>
+                <% } %>
             </ul>
             <% if (isAuthenticated) { %>
                 <div class="dropdown">
