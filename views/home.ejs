@@ -24,8 +24,8 @@
                             </div>
                             <div class="col-md-6">
                                 <small class="text-white px-2">
-                                    <a href="https://drive.google.com/file/d/1OPkoQBpQAC2vNkQkNbugtQba97Bd8Z2l/view?usp=drive_link" target="_blank" class="btn btn-warning btn-round btn-md">
-                                        <i class="fa fa-download" aria-hidden="true"></i> Download IV
+                                    <a  class="btn btn-warning btn-round btn-md" data-bs-toggle="modal" data-bs-target="#address-modal">
+                                        <i class="fa fa-location-dot fa-bounce" aria-hidden="true"></i> Address
                                     </a>
                                 </small>
                             </div>
@@ -64,9 +64,9 @@
                         <div class="nav-wrapper position-relative end-0 mt-5">
                             <ul class="nav nav-pills nav-fill rounded-pill flex-row p-1" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link mb-0 px-0 py-1 rounded-pill memorial-nav-link active" data-bs-toggle="tab" href="#tribute_widget" role="tab" aria-selected="true">
-                                        <i class="fa-solid fa-cross fa-lg" style="color: #0053ae;"></i> Tribute
-                                        <span class="badge badge-danger p-0 m-0 position-absolute" id="tribute-badge" style="display: none;">
+                                    <a class="nav-link mb-0 px-0 py-1 memorial-nav-link rounded-pill active" data-bs-toggle="tab" href="#biography_widget" role="tab" aria-controls="biography_widget" aria-selected="false">
+                                        <i class="fa-solid fa-book fa-lg" style="color: #beb202;"></i> Biography
+                                        <span class="badge badge-danger p-0 m-0 position-absolute" id="biography-badge" style="display: none;">
                                             <i class="fa-solid fa-circle fa-beat fa-xs"></i>
                                         </span>
                                     </a>
@@ -80,9 +80,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link mb-0 px-0 py-1 memorial-nav-link rounded-pill" data-bs-toggle="tab" href="#biography_widget" role="tab" aria-controls="biography_widget" aria-selected="false">
-                                        <i class="fa-solid fa-book fa-lg" style="color: #8c8200;"></i> Biography
-                                        <span class="badge badge-danger p-0 m-0 position-absolute" id="biography-badge" style="display: none;">
+                                    <a class="nav-link mb-0 px-0 py-1 rounded-pill memorial-nav-link" data-bs-toggle="tab" href="#tribute_widget" role="tab" aria-selected="true">
+                                        <i class="fa-solid fa-cross fa-lg" style="color: #0053ae;"></i> Tribute
+                                        <span class="badge badge-danger p-0 m-0 position-absolute" id="tribute-badge" style="display: none;">
                                             <i class="fa-solid fa-circle fa-beat fa-xs"></i>
                                         </span>
                                     </a>
@@ -97,215 +97,8 @@
 
         <div class="tab-content tab-space px-0 mx-0">
 
-            <!-- Tribute section -->
-            <div class="tab-pane active" id="tribute_widget">
-
-                <section class="py-7">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-10 ms-auto me-auto">
-                                <h4 class="text-center mb-5">Leave a Tribute</h4>
-
-                                <% if (isAuthenticated) { %>
-                                    <div class="d-flex">
-                                        <div>
-                                            <a class="author" href="#">
-                                                <div class="position-relative">
-                                                    <% if (user && user.profile && user.profile.image) { %>
-                                                        <img class="avatar rounded-circle shadow" alt="64x64" src="<%= user.profile.image %>">
-                                                    <% } else { %>
-                                                        <!-- Handle case when there is no user, user.profile, or user.profile.image -->
-                                                        <img class="avatar rounded-circle shadow" alt="64x64" src="https://res.cloudinary.com/geetechlab-com/image/upload/v1583147406/nwaben.com/user_azjdde_sd2oje.jpg">
-                                                    <% } %>
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="ms-3 w-100">
-                                            <form id="tribute-form">
-                                                <div class="d-flex justify-content-around m-2">
-                                                    <input type="radio" class="radio_item"
-                                                        value="candle" name="category"
-                                                        id="candle" checked>
-                                                    <label class="label_item text-center" for="candle">
-                                                        <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/000000/external-candles-pharmaceutical-flaticons-lineal-color-flat-icons-2.png"/>
-                                                        <h6 class="font-normal text-center">Light a candle</h6>
-                                                    </label>
-
-                                                    <!--RADIO Flower-->
-                                                    <input type="radio" class="radio_item"
-                                                        value="flower" name="category"
-                                                        id="flower">
-                                                    <label class="label_item text-center" for="flower">
-                                                        <img src="https://img.icons8.com/color/64/000000/bunch-flowers.png"/>
-                                                        <h6 class="font-normal text-center">Lay a flower</h6>
-                                                    </label>
-
-                                                    <!--RADIO Note-->
-                                                    <input type="radio" class="radio_item"
-                                                        value="note" name="category" id="note">
-                                                        <label class="label_item text-center" for="note">
-                                                            <img src="https://img.icons8.com/color/64/000000/scroll.png"/>
-                                                            <h6 class="font-normal text-center">Leave a note</h6>
-                                                        </label>
-                                                </div>
-
-
-                                                <textarea class="form-control border-radius-lg" placeholder="Please write your tribute here..." rows="4" name="tribute_text" id="tribute_text" required>
-                                                </textarea>
-
-                                                <div>
-                                                    <button type="submit" class="btn bg-gradient-info float-end mt-2 px-2" id="upload_tribute">
-                                                        <i class="fa-solid fa-cross fa-lg" style="color: #0156ab;"></i> Add Tribute
-                                                    </button>
-                                                    <button type="button" class="btn bg-gradient-dark float-end mt-2 mx-2" data-bs-toggle="modal" data-bs-target="#donation-modal">
-                                                        <i class="fa-solid fa-hand-holding-dollar fa-lg" style="color: #24a609;"></i> Donate
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div> <!-- end media-post -->
-                                <% } else { %>
-                                    <p class="lead text-center">Please click <a href="/auth/login">here</a> to login/register and add your tribute</p>
-                                <% } %>
-
-
-                                <div>
-                                    <% if (tributes) { %>
-                                        <% if (tributes.length > 1) { %>
-                                            <h4 class="text-center mb-4 mt-5" id="tribute_counter"><%= tributes.length %> Tributes</h4>
-                                        <% } else if (tributes.length === 1) { %>
-                                            <h4 class="text-center mb-4 mt-5" id="tribute_counter">1 Tribute</h4>
-                                        <% } else { %>
-                                            <h4 class="text-center mb-5 mt-5" id="tribute_counter">No Tributes Yet</h4>
-                                            <p class="text-center lead" id="tribute_counter_text">Be the first to write a tribute for our beloved Dr. Mrs. Juliana Chibuogwu Nwazuruoke</p>
-                                        <% } %>
-                                    <% } %>
-
-                                    <div id="tributes-list" class="justify-content">
-                                        <% if (tributes) { %>
-                                            <% for (const tribute of tributes) { %>
-                                                <div class="d-flex my-3" id="tribute-item-<%= tribute._id %>">
-                                                    <div>
-                                                        <a href="#">
-                                                            <div class="position-relative">
-                                                                <!-- Display the profile image of the user who created the tribute -->
-                                                                <% if (tribute.by && tribute.by.profile && tribute.by.profile.image) { %>
-                                                                    <img class="avatar rounded-circle shadow" src="<%= tribute.by.profile.image %>" alt="<%= tribute.by.full_name %>">
-                                                                <% } else { %>
-                                                                    <img class="avatar rounded-circle shadow" src="https://res.cloudinary.com/geetechlab-com/image/upload/v1583147406/nwaben.com/user_azjdde_sd2oje.jpg" alt="Default User">
-                                                                <% } %>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                    <div class="ms-3">
-                                                        <div class="d-flex justify-content-between">
-                                                            <h6>
-                                                                <%= tribute.by.full_name %>
-                                                                <span class="text-muted text-xs tribute-timestamp">· <%= formatDate(tribute.on) %></span>
-                                                            </h6>
-
-                                                            <% if (tribute.category === "candle") { %>
-                                                                <img class="px-2" src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/48/000000/external-candles-pharmaceutical-flaticons-lineal-color-flat-icons-2.png"/>
-                                                            <% } else if (tribute.category === "flower") { %>
-                                                                <img class="px-2" src="https://img.icons8.com/color/48/000000/bunch-flowers.png"/>
-                                                            <% } else { %>
-                                                                <img class="px-2" src="https://img.icons8.com/color/48/000000/scroll.png"/>
-                                                            <% } %>
-                                                        </div>
-
-                                                        <!-- Display the tribute text -->
-                                                        <p class="text-dark font-weight-bold"><%= tribute.tribute_text %></p>
-
-                                                        <% if (isAuthenticated) { %>
-                                                            <div class="ms-auto text-start mb-3 mt-0">
-                                                                <% if (user.is_admin || tribute.by._id.toString() === user._id.toString()) { %>
-                                                                    <button class="btn text-dark px-2 btn-link" id="delete-tribute-button" rel="tooltip" data-tribute-id="<%= tribute._id %>" title="" data-original-title="delete tribute">
-                                                                        <i class="fa-solid fa-trash-can fa-lg" style="color: #ff1c1c;"></i> Delete
-                                                                    </button>
-                                                                <% } %>
-                                                                <!-- <a href="#" class="btn text-danger px-2 btn-link">
-                                                                    <i class="fas fa-heart"></i> 243
-                                                                </a> -->
-                                                            </div>
-                                                        <% } %>
-                                                    </div>
-                                                </div>
-                                            <% } %>
-                                        <% } %>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-            </div>
-
-
-
-            <!-- Gallery section -->
-            <div class="tab-pane" id="gallery_widget">
-                <section class="py-5">
-                    <div class="container">
-                        <div class="row">
-
-                            <div class="row justify-content-md-center mb-3">
-                                <div class="col-md-8">
-                                    <h6 class="text-center">Upload Images</h6>
-                                    <% if (isAuthenticated) { %>
-                                        <div class="upload-card mb-3">
-                                            <div class="upload-form">
-                                                <span class="inner">Drag and drop images here or
-                                                    <span class="file_select">Browse</span>
-                                                    <input name="images" type="file" class="file" multiple accept="image/*" required>
-                                                </span>
-                                            </div>
-                                            <div class="img-container">
-                                            </div>
-                                        </div>
-                                        <button class="btn btn-icon btn-3 btn-info" type="button" id="upload_gallery">
-                                            <span class="btn-inner--icon"><i class="fa-solid fa-upload fa-lg"></i></span>
-                                            <span class="btn-inner--text">Upload</span>
-                                        </button>
-                                    <% } else { %>
-                                        <p class="lead text-center">Please click <a href="/auth/login">here</a> to login/register and add your tribute</p>
-                                    <% } %>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row min-vh-25 gallery-container" id="animated-thumbnails-gallery">
-                            <% if (galleries) { %>
-                                <% for (const gallery of galleries) { %>
-                                    <div class="col-md-3 mb-3 mt-3 gallery-item gallery-item-<%= gallery._id %>" data-lg-size="1600-1067" data-src="<%= gallery.image %>" data-sub-html="<h4> Uploaded by <%= gallery.by.full_name %> </h4> <p> <%= gallery.description %> </p>">
-                                        <div class="position-relative" style="height: 250px;"> <!-- Set a fixed height for the container -->
-                                            <img alt="<%= gallery.by.full_name %>" class="w-100 h-100 border-radius-lg bg-cover img-responsive" src="<%= gallery.image %>"/>
-                                            <div class="d-flex justify-content-end">
-                                                <% if (isAuthenticated) { %>
-                                                    <% if (user.is_admin || gallery.by._id.toString() === user._id.toString()) { %>
-                                                        <button type="button" class="btn badge bg-gradient-danger text-white px-2 mx-3 btn-link position-absolute top-0 end-10 m-1" id="delete-gallery-button" data-gallery-id="<%= gallery._id %>" onclick="handleDeleteButtonClick('<%= gallery._id %>')">
-                                                            <i class="fa-solid fa-trash-can fa-lg"></i>
-                                                        </button>
-                                                    <% } %>
-                                                <% } %>
-                                                <button type="button" class="btn badge bg-gradient-info text-white px-2 btn-link position-absolute top-0 end-0 m-1" id="view-gallery-button" data-gallery-id="<%= gallery._id %>" onclick="handleViewButtonClick()">
-                                                    <i class="fa-solid fa-eye fa-lg"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                <% } %>
-
-                            <% } %>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-
-
             <!-- Bio section -->
-            <div class="tab-pane" id="biography_widget">
+            <div class="tab-pane active" id="biography_widget">
                 <section class=" pt-md-5 pb-md-5 pt-lg-7">
                     <div class="container-fluid">
                         <div class="row justify-content-end">
@@ -347,6 +140,7 @@
                                 </ul>
                             </div>
 
+
                             <!-- Bio Details here ... -->
                             <div class="col-lg-9">
                                 <div class="card mb-5">
@@ -355,7 +149,7 @@
                                             <div class="mt-3">
                                                 <a href="javascript:;">
                                                     <div class="position-relative">
-                                                        <img class="avatar avatar-xxl rounded-circle shadow" src="https://res.cloudinary.com/geetechlab-com/image/upload/v1715207930/nwaben.com/chio/mum-removebg-preview_2_ybjjvc.png">
+                                                        <img class="avatar avatar-xl rounded-circle shadow" src="https://res.cloudinary.com/geetechlab-com/image/upload/v1715207930/nwaben.com/chio/mum-removebg-preview_2_ybjjvc.png">
                                                     </div>
                                                 </a>
                                             </div>
@@ -363,23 +157,13 @@
                                             <div class="ms-4 my-auto">
                                                 <h5 class="text-white">Dr. Mrs. Juliana Chibuogwu Nwazuruoke(Chio)</h5>
                                                 <small class="text-white">1956 - 2024</small>
-                                                <figure class="my-3 text-white">
-                                                    <blockquote class="blockquote">
-                                                    <small class="ps-3">
-                                                        “Make the most of yourself
-                                                        by fanning the tiny inner
-                                                        sparks of possibility
-                                                        into flames of achievements”
-                                                    </small>
-                                                    </blockquote>
-                                                    <figcaption class="blockquote-footer ps-3  text-white">
-                                                        By <cite title="Source Title">Golda Meir, <small>Former Prime Minister of Israel</small></cite>
-                                                    </figcaption>
-                                                </figure>
+                                                <p class="text-white">
+                                                    “Pass but pass honorably, fail but fail honorably.”
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-body p-5">
+                                    <div class="card-body p-2">
 
                                         <h3 class="mt-5 mb-3" id="biography_section">Biography</h3>
                                         <p class="text-dark">
@@ -502,6 +286,213 @@
                 </section>
             </div>
 
+
+
+            <!-- Gallery section -->
+            <div class="tab-pane" id="gallery_widget">
+                <section class="py-5">
+                    <div class="container">
+                        <div class="row">
+
+                            <div class="row justify-content-md-center mb-3">
+                                <div class="col-md-8">
+                                    <h6 class="text-center">Upload Images</h6>
+                                    <% if (isAuthenticated) { %>
+                                        <div class="upload-card mb-3">
+                                            <div class="upload-form">
+                                                <span class="inner">Drag and drop images here or
+                                                    <span class="file_select">Browse</span>
+                                                    <input name="images" type="file" class="file" multiple accept="image/*" required>
+                                                </span>
+                                            </div>
+                                            <div class="img-container">
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-icon btn-3 btn-info" type="button" id="upload_gallery">
+                                            <span class="btn-inner--icon"><i class="fa-solid fa-upload fa-lg"></i></span>
+                                            <span class="btn-inner--text">Upload</span>
+                                        </button>
+                                    <% } else { %>
+                                        <p class="lead text-center">Please click <a href="/auth/login">here</a> to login/register and add your tribute</p>
+                                    <% } %>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row min-vh-25 gallery-container" id="animated-thumbnails-gallery">
+                            <% if (galleries) { %>
+                                <% for (const gallery of galleries) { %>
+                                    <div class="col-md-3 mb-3 mt-3 gallery-item gallery-item-<%= gallery._id %>" data-lg-size="1600-1067" data-src="<%= gallery.image %>" data-sub-html="<h4> Uploaded by <%= gallery.by.full_name %> </h4> <p> <%= gallery.description %> </p>">
+                                        <div class="position-relative" style="height: 250px;"> <!-- Set a fixed height for the container -->
+                                            <img alt="<%= gallery.by.full_name %>" class="w-100 h-100 border-radius-lg bg-cover img-responsive" src="<%= gallery.image %>"/>
+                                            <div class="d-flex justify-content-end">
+                                                <% if (isAuthenticated) { %>
+                                                    <% if (user.is_admin || gallery.by._id.toString() === user._id.toString()) { %>
+                                                        <button type="button" class="btn badge bg-gradient-danger text-white px-2 mx-3 btn-link position-absolute top-0 end-10 m-1" id="delete-gallery-button" data-gallery-id="<%= gallery._id %>" onclick="handleDeleteButtonClick('<%= gallery._id %>')">
+                                                            <i class="fa-solid fa-trash-can fa-lg"></i>
+                                                        </button>
+                                                    <% } %>
+                                                <% } %>
+                                                <button type="button" class="btn badge bg-gradient-info text-white px-2 btn-link position-absolute top-0 end-0 m-1" id="view-gallery-button" data-gallery-id="<%= gallery._id %>" onclick="handleViewButtonClick()">
+                                                    <i class="fa-solid fa-eye fa-lg"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% } %>
+
+                            <% } %>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+
+
+            <!-- Tribute section -->
+            <div class="tab-pane" id="tribute_widget">
+
+                <section class="py-7">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-10 ms-auto me-auto">
+                                <h4 class="text-center mb-5">Leave a Tribute</h4>
+
+                                <% if (isAuthenticated) { %>
+                                    <div class="d-flex">
+                                        <div>
+                                            <a class="author" href="#">
+                                                <div class="position-relative">
+                                                    <% if (user && user.profile && user.profile.image) { %>
+                                                        <img class="avatar rounded-circle shadow" alt="64x64" src="<%= user.profile.image %>">
+                                                    <% } else { %>
+                                                        <!-- Handle case when there is no user, user.profile, or user.profile.image -->
+                                                        <img class="avatar rounded-circle shadow" alt="64x64" src="https://res.cloudinary.com/geetechlab-com/image/upload/v1583147406/nwaben.com/user_azjdde_sd2oje.jpg">
+                                                    <% } %>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div class="ms-3 w-100">
+                                            <form id="tribute-form">
+                                                <div class="d-flex justify-content-around m-2">
+                                                    <input type="radio" class="radio_item"
+                                                        value="candle" name="category"
+                                                        id="candle" checked>
+                                                    <label class="label_item text-center" for="candle">
+                                                        <img src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/000000/external-candles-pharmaceutical-flaticons-lineal-color-flat-icons-2.png"/>
+                                                        <h6 class="font-normal text-center">Light a candle</h6>
+                                                    </label>
+
+                                                    <!--RADIO Flower-->
+                                                    <input type="radio" class="radio_item"
+                                                        value="flower" name="category"
+                                                        id="flower">
+                                                    <label class="label_item text-center" for="flower">
+                                                        <img src="https://img.icons8.com/color/64/000000/bunch-flowers.png"/>
+                                                        <h6 class="font-normal text-center">Lay a flower</h6>
+                                                    </label>
+
+                                                    <!--RADIO Note-->
+                                                    <input type="radio" class="radio_item"
+                                                        value="note" name="category" id="note">
+                                                        <label class="label_item text-center" for="note">
+                                                            <img src="https://img.icons8.com/color/64/000000/scroll.png"/>
+                                                            <h6 class="font-normal text-center">Leave a note</h6>
+                                                        </label>
+                                                </div>
+
+
+                                                <textarea class="form-control border-radius-lg" placeholder="Please write your tribute here..." rows="4" name="tribute_text" id="tribute_text" required>
+                                                </textarea>
+
+                                                <div>
+                                                    <button type="submit" class="btn bg-gradient-info float-end mt-2 px-2" id="upload_tribute">
+                                                        <i class="fa-solid fa-cross fa-lg" style="color: #0156ab;"></i> Add Tribute
+                                                    </button>
+                                                    <button type="button" class="btn bg-gradient-dark float-end mt-2 mx-2" data-bs-toggle="modal" data-bs-target="#donation-modal">
+                                                        <i class="fa-solid fa-hand-holding-dollar fa-lg" style="color: #24a609;"></i> Donate
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div> <!-- end media-post -->
+                                <% } else { %>
+                                    <p class="lead text-center">Please click <a href="/auth/login">here</a> to login/register and add your tribute</p>
+                                <% } %>
+
+
+                                <div>
+                                    <% if (typeof tributes !== 'undefined' && tributes.length > 0) { %>
+                                        <% if (tributes.length > 1) { %>
+                                            <h4 class="text-center mb-4 mt-5" id="tribute_counter"><%= tributes.length %> Tributes</h4>
+                                        <% } else if (tributes.length === 1) { %>
+                                            <h4 class="text-center mb-4 mt-5" id="tribute_counter">1 Tribute</h4>
+                                        <% } else { %>
+                                            <h4 class="text-center mb-5 mt-5" id="tribute_counter">No Tributes Yet</h4>
+                                            <p class="text-center lead" id="tribute_counter_text">Be the first to write a tribute for our beloved Dr. Mrs. Juliana Chibuogwu Nwazuruoke</p>
+                                        <% } %>
+                                    <% } %>
+
+                                    <div id="tributes-list" class="justify-content">
+                                        <% if (typeof tributes !== 'undefined' && tributes.length > 0) { %>
+                                            <% for (const tribute of tributes) { %>
+                                                <div class="d-flex my-3" id="tribute-item-<%= tribute._id %>">
+                                                    <div>
+                                                        <a href="#">
+                                                            <div class="position-relative">
+                                                                <!-- Display the profile image of the user who created the tribute -->
+                                                                <% if (tribute.by && tribute.by.profile && tribute.by.profile.image) { %>
+                                                                    <img class="avatar rounded-circle shadow" src="<%= tribute.by.profile.image %>" alt="<%= tribute.by.full_name %>">
+                                                                <% } else { %>
+                                                                    <img class="avatar rounded-circle shadow" src="https://res.cloudinary.com/geetechlab-com/image/upload/v1583147406/nwaben.com/user_azjdde_sd2oje.jpg" alt="Default User">
+                                                                <% } %>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="ms-3">
+                                                        <div class="d-flex justify-content-between">
+                                                            <h6>
+                                                                <%= tribute.by.full_name %>
+                                                                <span class="text-muted text-xs tribute-timestamp">· <%= formatDate(tribute.on) %></span>
+                                                            </h6>
+
+                                                            <% if (tribute.category === "candle") { %>
+                                                                <img class="px-2" src="https://img.icons8.com/external-flaticons-lineal-color-flat-icons/48/000000/external-candles-pharmaceutical-flaticons-lineal-color-flat-icons-2.png"/>
+                                                            <% } else if (tribute.category === "flower") { %>
+                                                                <img class="px-2" src="https://img.icons8.com/color/48/000000/bunch-flowers.png"/>
+                                                            <% } else { %>
+                                                                <img class="px-2" src="https://img.icons8.com/color/48/000000/scroll.png"/>
+                                                            <% } %>
+                                                        </div>
+
+                                                        <!-- Display the tribute text -->
+                                                        <p class="text-dark font-weight-bold"><%= tribute.tribute_text %></p>
+
+                                                        <% if (isAuthenticated) { %>
+                                                            <div class="ms-auto text-start mb-3 mt-0">
+                                                                <% if (user.is_admin || tribute.by._id.toString() === user._id.toString()) { %>
+                                                                    <button class="btn text-dark px-2 btn-link" id="delete-tribute-button" rel="tooltip" data-tribute-id="<%= tribute._id %>" title="" data-original-title="delete tribute">
+                                                                        <i class="fa-solid fa-trash-can fa-lg" style="color: #ff1c1c;"></i> Delete
+                                                                    </button>
+                                                                <% } %>
+                                                                <!-- <a href="#" class="btn text-danger px-2 btn-link">
+                                                                    <i class="fas fa-heart"></i> 243
+                                                                </a> -->
+                                                            </div>
+                                                        <% } %>
+                                                    </div>
+                                                </div>
+                                            <% } %>
+                                        <% } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
         </div>
     </div>
 </section>
@@ -569,6 +560,43 @@
                     <i class="fa-solid fa-shield-halved fa-lg"></i> Donate
                 </button>
                 <button type="button" class="btn btn-link text-danger ml-auto" data-bs-dismiss="modal">Close</button>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="address-modal" tabindex="-1" aria-labelledby="address-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="modal-title-notification">
+                    <i class="fa-solid fa-location-dot fa-bounce fa-lg px-2" style="color: #febf02;"></i>
+                    Address
+                </h6>
+                <button type="button" class="btn-close text-dark" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <small class="text-white px-2">
+                    <a href="https://asset.cloudinary.com/geetechlab-com/c473d72dcc578b926b9deaee21edcca0" target="_blank" class="btn btn-warning btn-round btn-md">
+                        <i class="fa fa-download" aria-hidden="true"></i> Download IV
+                    </a>
+                </small>
+                <div class="ratio ratio-16x9 mt-3">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3944.2373745229206!2d7.11153287275739!3d5.9582704123661685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10430b85be993037%3A0x76ad012a103050a6!2sSt%20Mary&#39;s%20Catholic%20Church%20Achina!5e0!3m2!1sen!2sng!4v1716016570837!5m2!1sen!2sng" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+            <!-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div> -->
         </div>
     </div>
