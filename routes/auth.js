@@ -62,7 +62,8 @@ router.post('/register', isNotAuthenticated, async (req, res) => {
         const newUser = new User({
             email: req.body.email,
             full_name: req.body.full_name,
-            username: username
+            username: username,
+            googleId: `${Date.now()}-${username}`
         });
 
         // Register the user using the passport-local-mongoose plugin
