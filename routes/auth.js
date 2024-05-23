@@ -34,7 +34,7 @@ router.get("/register", isNotAuthenticated, async (req, res) => {
         isAuthenticated: req.isAuthenticated(),
         user: null
     });
-})
+});
 
 
 // Display Authentication page.

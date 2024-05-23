@@ -13,24 +13,27 @@ module.exports = function(passport) {
     },
     async function(request, accessToken, refreshToken, googleProfile, done) {
         try {
+            // Use the provided Google ID or generate a random one if not present
+            const googleId = googleProfile.id || uuidv4();
+    
             // Find the user by their Google ID
-            let user = await User.findOne({ googleId: googleProfile.id });
-
+            let user = await User.findOne({ googleId });
+    
             // If the user is found
             if (user) {
                 // If the user has an associated profile
                 if (user.profile) {
                     let userProfile = await Profile.findById(user.profile);
-                    
+    
                     // Update the existing profile with new data
                     userProfile.image = googleProfile.photos && googleProfile.photos[0] ? googleProfile.photos[0].value : userProfile.image;
                     userProfile.gender = googleProfile.gender || userProfile.gender;
                     userProfile.full_name = googleProfile.displayName || userProfile.full_name;
-
+    
                     // Save the updated profile
                     await userProfile.save();
                 }
-                
+    
                 // Return the user to be logged in
                 return done(null, user);
             } else {
@@ -38,14 +41,14 @@ module.exports = function(passport) {
                 user = new User({
                     full_name: googleProfile.displayName,
                     email: googleProfile.emails && googleProfile.emails[0] ? googleProfile.emails[0].value : null,
-                    googleId: googleProfile.id,
-                    username: googleProfile.displayName.replace(/\s+/g, '').toLowerCase() || googleProfile.id, // Generate a username if needed
+                    googleId: googleId,
+                    username: googleProfile.displayName.replace(/\s+/g, '').toLowerCase() || googleId, // Generate a username if needed
                     date_joined: Date.now(),
                 });
-
+    
                 // Save the new user
                 await user.save();
-
+    
                 // Create a new profile for the user
                 const userProfile = new Profile({
                     slug: user.username,
@@ -54,14 +57,14 @@ module.exports = function(passport) {
                     bio: 'Say something about yourself',
                     user: user._id, // Link the profile to the user
                 });
-
+    
                 // Save the profile
                 await userProfile.save();
-
+    
                 // Update the user's profile reference
                 user.profile = userProfile._id;
                 await user.save();
-
+    
                 // Return the new user
                 return done(null, user);
             }
