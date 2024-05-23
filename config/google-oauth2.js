@@ -1,3 +1,4 @@
+const { v4: uuidv4 } = require('uuid');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const User = require('../models/User'); // Import User model
 const Profile = require('../models/Profile'); // Import Profile model
